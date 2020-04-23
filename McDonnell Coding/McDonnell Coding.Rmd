@@ -4,6 +4,7 @@ date: "Updated: `r format(Sys.time(), '%B %d, %Y')`"
 runtime: shiny
 output:
   html_document:
+    keep_md: true
     theme: cosmo
     toc: yes
     toc_depth: 3
