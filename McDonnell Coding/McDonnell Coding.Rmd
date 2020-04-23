@@ -4,11 +4,11 @@ date: "Updated: `r format(Sys.time(), '%B %d, %Y')`"
 runtime: shiny
 output:
   html_document:
-    keep_md: true
-    theme: cosmo
     toc: yes
     toc_depth: 3
     toc_float: yes
+    keep_md: true
+    theme: cosmo
 subtitle: Simulations and Subcodes
 ---
 
