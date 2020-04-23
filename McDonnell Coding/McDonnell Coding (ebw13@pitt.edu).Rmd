@@ -1,0 +1,181 @@
+---
+title: "McDonnell Coding"
+date: "Updated: `r format(Sys.time(), '%B %d, %Y')`"
+runtime: shiny
+output:
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+subtitle: Simulations and Subcodes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Setup
+```{r include = FALSE}
+# Install Packages
+if (!require("pacman")) install.packages("pacman")
+library(pacman)
+pacman::p_load("tidyverse", "readxl", "irr", "reshape")
+```
+
+``` {r include = FALSE}
+# Import ELA and Math Data
+df_ELA <- read_excel("~/Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_ELA_MASTER.xlsx")
+df_MATH <- read_excel("~/Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_MATH_MASTER.xlsx")
+
+# Stack and Clean ELA and Math 
+df_full <- rbind(df_ELA, df_MATH) %>%
+  drop_na(Content) %>%
+  mutate(HiLo = `Hi/Lo`) %>%
+  mutate(PrePost = fct_rev(`Pre/Post`)) %>%
+  mutate(Simulation1 = replace_na(Simulation1, 0)) %>%
+  mutate(Simulation2 = replace_na(Simulation2, 0)) %>%
+  mutate(Subcode1 = (case_when(
+    str_detect(Subcode1,"(?i)Eval*") ~ "Evaluation",
+    str_detect(Subcode1, "(?i)Ambig*")  ~ "Ambiguity",
+    str_detect(Subcode1, "(?i)Alte*")  ~ "Alternative",
+    str_detect(Subcode1, "(?i)Relau*")  ~ "Relaunch",
+    TRUE ~ Subcode1))) %>%
+  mutate(Subcode2 = case_when(
+    str_detect(Subcode2,"(?i)Eval*") ~ "Evaluation",
+    str_detect(Subcode2, "(?i)Ambig*")  ~ "Ambiguity",
+    str_detect(Subcode2, "(?i)Alte*")  ~ "Alternative",
+    str_detect(Subcode2, "(?i)Relau*")  ~ "Relaunch",
+    TRUE ~ Subcode2)) 
+
+```
+
+# Kappas
+```{r echo=FALSE}
+#### Descriptives and Graphs ####
+# SHINY
+# Define UI ####
+ui <- fluidPage(
+  titlePanel("Kappas"),
+  sidebarLayout(
+    sidebarPanel(
+      #Select Content
+      selectInput(inputId = "r1", 
+                  label = "Rater 1",
+                  colnames(df_full), 
+                  selected = "Simulation1"),
+      #Select Variables as Groups
+      selectInput(inputId = "r2", 
+                  label = "Rater 2",
+                  colnames(df_full), 
+                  selected = "Simulation2")
+    ),
+    mainPanel(tabPanel(
+      "Sum",
+      fluidRow(
+        verbatimTextOutput("Summary")
+        )
+    ))
+  )
+)
+
+
+# Define Server ####
+server <- function(input, output) {
+  #Subset data based on the given course sequence
+  #though we'll let ggplot do most of the summary later, we'll precalculate some of the means and standard errors to use for error bars
+  sumData <- reactive({
+    df_full %>%
+      select(input$r1, input$r2) %>%
+      kappa()
+    })
+  
+  output$Summary <- renderPrint({
+    print(sumData)
+  })
+    
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
+``` {r}
+# Kappas
+# ELA - Overall
+ELA_kap_sim_overall <- df_full %>%
+  filter(Content == "ELA") %>%
+  select(Simulation1, Simulation2) %>%
+  kappa2()
+print(ELA_kap_sim_overall)
+
+# Math - Overall
+MATH_kap_sim_overall <- df_MATH %>%
+  select(Simulation1, Simulation2) %>%
+  kappa2()
+table(df_MATH$Simulation1, df_MATH$Simulation2)
+MATH_kap_sim_overall
+```
+
+
+# Plots
+
+```{r echo=FALSE}
+#### Descriptives and Graphs ####
+# SHINY
+# Define UI ####
+ui <- fluidPage(
+  titlePanel("Simulations by Group"),
+  sidebarLayout(
+    sidebarPanel(
+      #Select Content
+      selectInput(inputId = "content", 
+                  label = "Content",
+                  choices = unique(df_full$Content),
+                  selected = "ELA"),
+      #Select Variables as Groups
+      selectInput(inputId = "col", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "HiLo"),
+      sliderInput("y.range", 
+                  "Y Range", 
+                  min=0, max=100, step=25, value=c(0,50))
+      
+    ),
+    mainPanel(tabPanel(
+      "Plot",
+      fluidRow(
+        plotOutput("mainPlot")
+      )
+    )))
+  )
+
+
+# Define Server ####
+server <- function(input, output) {
+  #Subset data based on the given course sequence
+  #though we'll let ggplot do most of the summary later, we'll precalculate some of the means and standard errors to use for error bars
+  chartData <- reactive({
+    df_full %>%
+      filter(Content == input$content) %>%
+      group_by_at(input$col) %>%
+      mutate(Sim_Pct = mean(Simulation1*100))
+    })
+  
+  output$mainPlot <- renderPlot({
+    ggplot(data=chartData(), 
+           aes_string(x = "input$col", y = "Sim_Pct", fill = input$col)) + 
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Sim_Pct, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = input$y.range) 
+  })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
