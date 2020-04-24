@@ -435,7 +435,7 @@ server <- function(input, output) {
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Ambig_Pct, digits = 2)), 
                 position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,20))
+      coord_cartesian(ylim = c(0,50))
     plot(p1)
   })
 }
@@ -543,7 +543,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Alt_Pct, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,20))
+      coord_cartesian(ylim = c(0,50))
     plot(p1)
   })
 }
@@ -652,7 +652,7 @@ server <- function(input, output) {
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Eval_Pct, digits = 2)), 
                 position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,20))
+      coord_cartesian(ylim = c(0,50))
     plot(p1)
   })
 }
@@ -760,7 +760,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Rel_Pct, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,20))
+      coord_cartesian(ylim = c(0,50))
     plot(p1)
   })
 }

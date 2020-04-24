@@ -15,6 +15,7 @@ df_full <- rbind(df_ELA, df_MATH) %>%
   rename(HiLo = `Hi/Lo`, PrePost = `Pre/Post`) %>%
   mutate(PrePost = fct_rev(PrePost)) %>%
   mutate(Cycle = recode(Cycle, "1" = "A", "2" = "B", "3" = "C")) %>%
+  filter(Cycle != "A") %>%
   mutate(Actor = recode(Actor, `Student:` = "")) %>%
   mutate(Simulation1 = replace_na(Simulation1, value = 0)) %>%
   mutate(Simulation2 = replace_na(Simulation2, value = 0)) %>%
@@ -55,22 +56,21 @@ df_full <- rbind(df_ELA, df_MATH) %>%
 
 write_csv(df_full, "~/Dropbox/GitHub/McDonnell/McDonnell Coding/McDonnell_CLEAN.csv")
   
-##### Kappas #####
+
+#### ====Test Code for ShinyApp ==== ####
+## Kappas ####
 # ELA - Overall
 df_ELA <- df_full %>%
   subset(Content == "ELA") %>%
   select(Simulation1, Simulation2) 
 kappa2(df_ELA)
 
-#### Descriptives and Graphs ####
-
+## Descriptives and Graphs ####
 # ELA Simulation by Hi/Low
-
 df_plot1 <- df_full %>%
   filter(Content == "Math") %>%
   group_by_at(vars(HiLo)) %>%
   mutate(Sim_Pct = mean(Simulation1*100))
-
 plot1 <- df_plot1 %>%
   ggplot( 
          aes_string(x = "HiLo", y = "Sim_Pct", fill = "HiLo")) + 
@@ -79,12 +79,12 @@ plot1 <- df_plot1 %>%
     geom_text(aes(label=round(Sim_Pct, digits = 2)), position = position_dodge(width = 1)) +
     coord_cartesian(ylim = c(0,50))
 plot1
-  
+
+# ELA Pct Words by Hi/Low
 df_plot2 <- df_full %>%
   filter(Content == "ELA", is.na(Actor) == FALSE) %>%
   group_by(Cycle, Actor) %>%
   mutate(Pct_SimWords = mean(SimWords)/mean(Words)*100)
-  
 plot2 <- df_plot2 %>%
   ggplot(
     aes(factor(Cycle), Pct_SimWords, fill = Actor)) + 
@@ -94,11 +94,11 @@ plot2 <- df_plot2 %>%
     coord_cartesian(ylim = c(0, 50)) 
 plot2
 
+# ELA Mean Words by Hi/Low
 df_plot3 <- df_full %>%
   filter(Sim_Any == 1, Content == "ELA", is.na(Actor) == FALSE) %>%
   group_by(Cycle, Actor) %>%
   mutate(Pct_SimWords = mean(Words))
-
 plot3 <- df_plot3 %>%
   ggplot(
     aes(factor(Cycle), Pct_SimWords, fill = Actor)) + 

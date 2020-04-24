@@ -794,109 +794,6 @@ ELA,Hi,Eagle,C,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,5,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,
 ELA,Hi,Eagle,C,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,4,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ELA,Hi,Eagle,C,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ELA,Hi,Eagle,C,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,25,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,11,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,54,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,80,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,Alternative,NA,NA,NA,0,NA,NA,NA,48,0,FALSE,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,48,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,59,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,9,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,8,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,98,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,Alternative,NA,NA,NA,0,NA,NA,NA,48,0,FALSE,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,48,0
-ELA,Hi,Elephant,A,Post,T:,0,Alternative,NA,NA,NA,0,NA,NA,NA,148,0,FALSE,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,148,0
-ELA,Hi,Elephant,A,Post,C:,0,Alternative,NA,NA,NA,0,NA,NA,NA,8,0,FALSE,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,8,0
-ELA,Hi,Elephant,A,Post,T:,0,Alternative,NA,NA,NA,0,NA,NA,NA,68,0,FALSE,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,68,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,32,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,66,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,14,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,6,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,25,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,28,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,82,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,10,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,35,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,115,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,190,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,11,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,123,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,9,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,32,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,32,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,33,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,4,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,55,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,121,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,13,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,27,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,10,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,1,Ambiguity,NA,NA,NA,1,Ambiguity,NA,C launch: C recaps what happened using evidence from video/establishes uncertainty,158,158,FALSE,1,0,1,0,0,0,1,0,0,0,1,0,0,0,158,0,0
-ELA,Hi,Elephant,A,Post,T:,1,NA,NA,NA,NA,1,Ambiguity,NA,T uptake: T voices recognition of problem/uncertainty,3,3,FALSE,1,0,0,0,0,0,1,0,0,0,1,0,0,0,3,0,0
-ELA,Hi,Elephant,A,Post,C:,1,NA,NA,NA,NA,1,Ambiguity,NA,NA,8,8,FALSE,1,0,0,0,0,0,1,0,0,0,1,0,0,0,8,0,0
-ELA,Hi,Elephant,A,Post,T:,1,NA,NA,NA,NA,1,Ambiguity,NA,NA,14,14,FALSE,1,0,0,0,0,0,1,0,0,0,1,0,0,0,14,0,0
-ELA,Hi,Elephant,A,Post,C:,1,NA,NA,NA,NA,1,Ambiguity,NA,NA,71,71,FALSE,1,0,0,0,0,0,1,0,0,0,1,0,0,0,71,0,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Alternative,1a,C raises t idea for alternative move for further discussion (note: are there 2 raised here?)       Evaluative statement bolded but not enough to code as evaluating,126,126,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,126,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Alternative,1a,NA,8,8,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,8,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Alternative,2a (?),NA,26,26,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,26,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Alternative,2a (?),NA,33,33,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,33,0
-ELA,Hi,Elephant,A,Post,C:,1,NA,NA,NA,NA,1,Alternative,2a,NA,2,2,FALSE,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,2,0
-ELA,Hi,Elephant,A,Post,T:,1,NA,NA,NA,NA,1,Alternative,2a,NA,15,15,FALSE,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,15,0
-ELA,Hi,Elephant,A,Post,C:,1,NA,NA,NA,NA,1,Alternative,2a,NA,1,1,FALSE,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0
-ELA,Hi,Elephant,A,Post,T:,1,NA,NA,NA,NA,1,Alternative,2a,NA,9,9,FALSE,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,9,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Alternative,1a,C redirects to first alternative- rewording the question,12,12,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,12,0
-ELA,Hi,Elephant,A,Post,C:,1,Evaluating,NA,NA,NA,1,Alternative,1a,NA,8,8,FALSE,1,1,0,0,0,0,0,1,0,1,0,1,0,8,0,8,0
-ELA,Hi,Elephant,A,Post,T:,1,Evaluating,NA,NA,NA,1,Alternative,1a,"NOTE: These are not coded as evaluating because though the teacher gives a reason for the alternative move, there is no elaboration on why",22,22,FALSE,1,1,0,0,0,0,0,1,0,1,0,1,0,22,0,22,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Alternative,1a,C prompts T to think counterfactually,60,60,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,60,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Alternative,3a,T reaches impasse- proposes another alternative that isn't aligned with goal,18,18,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,18,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Evaluating,3a,C redirects T to consider proposed alternative (asking more questions) in light of discussion goals,71,71,FALSE,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,71,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Alternative,4a,T proposes new alternative,6,6,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,6,0
-ELA,Hi,Elephant,A,Post,C:,1,Evaluating,NA,NA,NA,1,Alternative,4a,C challenge- suggestion doesn't make sense in this context,6,6,FALSE,1,1,0,0,0,0,0,1,0,1,0,1,0,6,0,6,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Alternative,5a,T proposes new alternative from framework,57,57,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,57,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Alternative,5a,C uptake of T idea,31,31,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,31,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Alternative,5a,NA,13,13,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,13,0
-ELA,Hi,Elephant,A,Post,C:,1,Evaluating,NA,NA,NA,1,Evaluating,5a,C builds off T idea- extends with reasoning,50,50,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,50,0,0,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Evaluating,"5, 1 (because recapping was mentioned initially)",T extends even further- compares with previous suggestion (note- should the number of moves being discussed be noted?),41,41,FALSE,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,41,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Alternative,1a,NA,15,15,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,15,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Alternative,1a,NA,10,10,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,10,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Evaluating,1a,"Unsure about how to code this one- I think that lines 73,74 & 77 together meet the criteria for evaluting but maybe not individually?",47,47,FALSE,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,47,0
-ELA,Hi,Elephant,A,Post,T:,1,Evaluating,NA,NA,NA,1,Evaluating,1a,NA,12,12,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,12,0,0,0
-ELA,Hi,Elephant,A,Post,C:,1,NA,NA,NA,NA,1,Evaluating,1a,NA,1,1,FALSE,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,1,Evaluating,NA,NA,NA,1,Evaluating,1a,NA,8,8,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,8,0,0,0
-ELA,Hi,Elephant,A,Post,C:,1,Evaluating,NA,NA,NA,1,Evaluating,1a,NA,24,24,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,24,0,0,0
-ELA,Hi,Elephant,A,Post,T:,1,Evaluating,NA,NA,NA,0,NA,NA,NA,70,70,FALSE,1,1,0,0,0,0,0,0,0,1,0,0,0,70,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,18,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,113,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,5,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,145,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,41,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,20,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,2,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,11,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,38,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,33,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,6,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Ambiguity,NA,C relaunches simulation- what else could have been used?,23,23,FALSE,1,0,0,1,0,0,1,0,0,0,1,1,0,0,23,23,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Evaluating,1b.,NA,97,97,FALSE,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,97,0
-ELA,Hi,Elephant,A,Post,C:,1,NA,NA,NA,NA,1,Evaluating,1b.,NA,1,1,FALSE,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Evaluating,1b.,NA,37,37,FALSE,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,37,0
-ELA,Hi,Elephant,A,Post,C:,1,Evaluating,NA,NA,NA,1,Alternative,2b,C raises up T suggestion for further discussion,22,22,FALSE,1,1,0,0,0,0,0,1,0,1,0,1,0,22,0,22,0
-ELA,Hi,Elephant,A,Post,T:,1,Evaluating,NA,NA,NA,1,Evaluating,2b,NA,49,49,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,49,0,0,0
-ELA,Hi,Elephant,A,Post,C:,1,Alternative,NA,NA,NA,1,Alternative,3b,C suggests new T move,25,25,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,25,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Alternative,3b,NA,36,36,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,36,0
-ELA,Hi,Elephant,A,Post,C:,1,NA,NA,NA,NA,1,Alternative,3b,NA,1,1,FALSE,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0
-ELA,Hi,Elephant,A,Post,T:,1,Alternative,NA,NA,NA,1,Evaluating,3b,Unsure- does this rise to the level of evaluating?,39,39,FALSE,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,39,0
-ELA,Hi,Elephant,A,Post,C:,1,Evaluating,NA,NA,NA,1,Evaluating,3b,NA,109,109,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,109,0,0,0
-ELA,Hi,Elephant,A,Post,T:,1,Evaluating,NA,NA,NA,1,Evaluating,3b,Again kind of unsure- does this rise to level of evaluating?,34,34,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,34,0,0,0
-ELA,Hi,Elephant,A,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,60,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-ELA,Hi,Elephant,A,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,49,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ELA,Hi,Elephant,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,6,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ELA,Hi,Elephant,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,4,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ELA,Hi,Elephant,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,10,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -6032,84 +5929,84 @@ Math,Hi,Endive,C,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,3,0,FALSE,0,0,0,0,0,0,0,0,0,0,
 Math,Hi,Endive,C,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,11,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Math,Hi,Endive,C,Post,T:,0,NA,NA,NA,NA,0,NA,NA,NA,2,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Math,Hi,Endive,C,Post,C:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,6,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,7,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,25,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,24,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,24,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,38,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,3,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,17,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,12,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,96,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,53,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,59,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,Didn't mark as ambiguity bc so far it is just about student misconceptions (not t actions),39,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,69,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,Ambiguity,Launch- 1,"*Marked this as ambiguity because in the next line the teacher starts discussing strategies she might use (i.e., potential 'start' of sim)",41,0,FALSE,0,0,0,0,0,0,1,0,0,0,1,0,0,0,41,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,Alternative,1.1000000000000001,NA,79,0,FALSE,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,79,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,24,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,24,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Ambiguity,1,How T will use manipulatives,Procedures: Materials,0,NA,NA,NA,41,41,FALSE,1,0,1,0,0,0,0,0,0,0,1,0,0,0,41,0,0
-Math,Hi,Radish,B,Pre,T:,1,Alternative,1.1a,NA,NA,0,NA,NA,NA,34,34,FALSE,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,34,0
-Math,Hi,Radish,B,Pre,C:,1,NA,NA,NA,NA,0,NA,NA,NA,10,10,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,1,Alternative,1.1b,NA,NA,0,NA,NA,NA,36,36,FALSE,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,36,0
-Math,Hi,Radish,B,Pre,C:,1,NA,NA,"Not quite eval ""good idea""",NA,0,NA,NA,Didn’t count as evaluating bc just a simple affirmation,33,33,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,0,NA,1.1000000000000001,DIDN’T count as sim bc never went beyond alternatives,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,NA,NA,NA,NA,0,NA,NA,NA,10,10,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,0,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Relaunch,1.2,Anticipating St think in new part,Considering the task,1,Ambiguity,2,NA,67,67,FALSE,1,0,0,0,1,0,1,0,0,0,1,0,1,0,67,0,67
-Math,Hi,Radish,B,Pre,T:,1,Evaluating,1.2a,Continuation bc T takes up manipulatives thread,NA,1,Alternative,2.1,* or ambiguity- but wasn't sure if it was the start of a new sim. Different part of the task but seems like the same general topic/larger pedagogical iissue..,118,118,FALSE,1,1,0,0,0,0,0,1,0,1,0,1,0,118,0,118,0
-Math,Hi,Radish,B,Pre,C:,1,Alternative,1.2a,Relaunch bc T takes up manipulatives thread,NA,1,NA,NA,NA,24,24,FALSE,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,24,0
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,NA,NA,NA,NA,1,NA,NA,NA,7,7,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Alternative,1.2a,NA,NA,1,NA,NA,NA,16,16,FALSE,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,16,0
-Math,Hi,Radish,B,Pre,T:,1,Evaluating,1.2a,Surface,NA,1,NA,NA,NA,41,41,FALSE,1,1,0,0,0,0,0,0,0,1,0,0,0,41,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Relaunch,1.3,Relaunch bc T takes up manipulatives thread,Considering the task,1,NA,NA,NA,74,74,FALSE,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,74
-Math,Hi,Radish,B,Pre,T:,1,Evaluating,1.3,Surface,NA,1,Evaluating,2.1,NA,29,29,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,29,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Evaluating,1.3,Surface,NA,1,NA,NA,"*struggled here- would definitely be ""evaluating-LIGHT",36,36,FALSE,1,1,0,0,0,0,0,0,0,1,0,0,0,36,0,0,0
-Math,Hi,Radish,B,Pre,T:,1,Evaluating,1.3,Surface,NA,1,NA,NA,"*struggled here- would definitely be ""evaluating-LIGHT",14,14,FALSE,1,1,0,0,0,0,0,0,0,1,0,0,0,14,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,PIVOT,NA,0,NA,NA,NA,26,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,1,NA,NA,NA,4,4,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,1,Evaluating,2.1,NA,2,2,FALSE,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,21,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,94,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Ambiguity,2.1,Startagies to show they are equivalent,Selecting: Most relevant solutions (4.1),1,Relaunch,3,*K281Or does this start the line above?,44,44,FALSE,1,0,1,0,0,0,0,0,1,0,1,0,1,0,44,0,44
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Relaunch,2.2000000000000002,Specific group,Considering specific students,1,NA,NA,NA,57,57,FALSE,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,57
-Math,Hi,Radish,B,Pre,T:,1,Evaluating,2.2a,Surface,NA,1,Evaluating,3.1,*considers multiple strategies here- mark as such? NOTE: Does this actually count as evaluating?,90,90,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,90,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Alternative,2.2b,NA,NA,1,Alternative,3.1b,NA,25,25,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,25,0
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,NA,NA,NA,NA,1,NA,NA,NA,26,26,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,5,5,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,17,17,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,1,Evaluating,2.1,Depth,NA,1,Evaluating,3.1,NA,32,32,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,32,0,0,0
-Math,Hi,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,12,12,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,16,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,2,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,18,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,49,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,13,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,48,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,I don’t really see this last section as simulation- more just the teacher describing how she uses accountable talk and her goals…,16,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,4,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,75,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,20,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,40,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,10,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,2,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,7,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,2,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,17,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Math,Hi,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,6,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,6,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,7,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,25,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,24,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,24,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,38,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,3,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,17,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,12,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,96,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,53,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,59,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,Didn't mark as ambiguity bc so far it is just about student misconceptions (not t actions),39,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,69,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,Ambiguity,Launch- 1,"*Marked this as ambiguity because in the next line the teacher starts discussing strategies she might use (i.e., potential 'start' of sim)",41,0,FALSE,0,0,0,0,0,0,1,0,0,0,1,0,0,0,41,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,Alternative,1.1000000000000001,NA,79,0,FALSE,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,79,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,24,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,24,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Ambiguity,1,How T will use manipulatives,Procedures: Materials,0,NA,NA,NA,41,41,FALSE,1,0,1,0,0,0,0,0,0,0,1,0,0,0,41,0,0
+Math,Low,Radish,B,Pre,T:,1,Alternative,1.1a,NA,NA,0,NA,NA,NA,34,34,FALSE,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,34,0
+Math,Low,Radish,B,Pre,C:,1,NA,NA,NA,NA,0,NA,NA,NA,10,10,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,1,Alternative,1.1b,NA,NA,0,NA,NA,NA,36,36,FALSE,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,36,0
+Math,Low,Radish,B,Pre,C:,1,NA,NA,"Not quite eval ""good idea""",NA,0,NA,NA,Didn’t count as evaluating bc just a simple affirmation,33,33,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,0,NA,1.1000000000000001,DIDN’T count as sim bc never went beyond alternatives,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,NA,NA,NA,NA,0,NA,NA,NA,10,10,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,0,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Relaunch,1.2,Anticipating St think in new part,Considering the task,1,Ambiguity,2,NA,67,67,FALSE,1,0,0,0,1,0,1,0,0,0,1,0,1,0,67,0,67
+Math,Low,Radish,B,Pre,T:,1,Evaluating,1.2a,Continuation bc T takes up manipulatives thread,NA,1,Alternative,2.1,* or ambiguity- but wasn't sure if it was the start of a new sim. Different part of the task but seems like the same general topic/larger pedagogical iissue..,118,118,FALSE,1,1,0,0,0,0,0,1,0,1,0,1,0,118,0,118,0
+Math,Low,Radish,B,Pre,C:,1,Alternative,1.2a,Relaunch bc T takes up manipulatives thread,NA,1,NA,NA,NA,24,24,FALSE,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,24,0
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,NA,NA,NA,NA,1,NA,NA,NA,7,7,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Alternative,1.2a,NA,NA,1,NA,NA,NA,16,16,FALSE,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,16,0
+Math,Low,Radish,B,Pre,T:,1,Evaluating,1.2a,Surface,NA,1,NA,NA,NA,41,41,FALSE,1,1,0,0,0,0,0,0,0,1,0,0,0,41,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Relaunch,1.3,Relaunch bc T takes up manipulatives thread,Considering the task,1,NA,NA,NA,74,74,FALSE,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,74
+Math,Low,Radish,B,Pre,T:,1,Evaluating,1.3,Surface,NA,1,Evaluating,2.1,NA,29,29,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,29,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Evaluating,1.3,Surface,NA,1,NA,NA,"*struggled here- would definitely be ""evaluating-LIGHT",36,36,FALSE,1,1,0,0,0,0,0,0,0,1,0,0,0,36,0,0,0
+Math,Low,Radish,B,Pre,T:,1,Evaluating,1.3,Surface,NA,1,NA,NA,"*struggled here- would definitely be ""evaluating-LIGHT",14,14,FALSE,1,1,0,0,0,0,0,0,0,1,0,0,0,14,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,PIVOT,NA,0,NA,NA,NA,26,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,1,NA,NA,NA,4,4,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,1,Evaluating,2.1,NA,2,2,FALSE,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,21,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,94,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Ambiguity,2.1,Startagies to show they are equivalent,Selecting: Most relevant solutions (4.1),1,Relaunch,3,*K281Or does this start the line above?,44,44,FALSE,1,0,1,0,0,0,0,0,1,0,1,0,1,0,44,0,44
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Relaunch,2.2000000000000002,Specific group,Considering specific students,1,NA,NA,NA,57,57,FALSE,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,57
+Math,Low,Radish,B,Pre,T:,1,Evaluating,2.2a,Surface,NA,1,Evaluating,3.1,*considers multiple strategies here- mark as such? NOTE: Does this actually count as evaluating?,90,90,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,90,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Alternative,2.2b,NA,NA,1,Alternative,3.1b,NA,25,25,FALSE,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,25,0
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,NA,NA,NA,NA,1,NA,NA,NA,26,26,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,5,5,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,NA,NA,NA,NA,1,NA,NA,NA,1,1,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,17,17,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,1,Evaluating,2.1,Depth,NA,1,Evaluating,3.1,NA,32,32,FALSE,1,1,0,0,0,1,0,0,0,1,0,0,0,32,0,0,0
+Math,Low,Radish,B,Pre,T:,1,NA,NA,NA,NA,1,NA,NA,NA,12,12,FALSE,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,16,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,2,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,18,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,49,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,13,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,48,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,I don’t really see this last section as simulation- more just the teacher describing how she uses accountable talk and her goals…,16,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,1,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,4,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,75,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,20,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,40,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,10,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,2,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,7,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,2,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,17,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Math,Low,Radish,B,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,6,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Math,Low,Radish,C,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,4,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Math,Low,Radish,C,Pre,T:,0,NA,NA,NA,NA,0,NA,NA,NA,3,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Math,Low,Radish,C,Pre,C:,0,NA,NA,NA,NA,0,NA,NA,NA,12,0,FALSE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
