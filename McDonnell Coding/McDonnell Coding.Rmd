@@ -18,65 +18,23 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r include = FALSE}
 # Install Packages
-if (!require("pacman")) install.packages("pacman")
-library(pacman)
-pacman::p_load("tidyverse", "readxl", "irr", "sjmisc")
+library("tidyverse")
+library("irr")
+library("sjmisc")
+
 ```
 
 ``` {r include = FALSE}
 # Import ELA and Math Data
-df_ELA <- read_excel("~/Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_ELA_MASTER.xlsx")
-df_MATH <- read_excel("~/Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_MATH_MASTER.xlsx")
-# Stack and Clean ELA and Math 
-df_full <- rbind(df_ELA, df_MATH) %>%
-  drop_na(Content) %>%
-  mutate(odd = ifelse((Pair == "Radish" & Cycle == "B" & `Pre/Post` == "Post") |
-           (Pair == "Rabbit" & Cycle == "3" & `Pre/Post`  == "Pre"), T, F)) %>%
-  filter(odd == F) %>%
-  rename(HiLo = `Hi/Lo`, PrePost = `Pre/Post`) %>%
-  mutate(PrePost = fct_rev(PrePost)) %>%
-  mutate(Cycle = recode(Cycle, "1" = "A", "2" = "B", "3" = "C")) %>%
-  mutate(Actor = recode(Actor, `Student:` = "")) %>%
-  mutate(Simulation1 = replace_na(Simulation1, value = 0)) %>%
-  mutate(Simulation2 = replace_na(Simulation2, value = 0)) %>%
-  mutate(Sim_Any = ifelse(Simulation1 == 1 | Simulation2 == 1, 1, 0)) %>%
-  mutate(SimWords = ifelse(Sim_Any == 1, Words, 0)) %>%
-  mutate(Subcode1 = (case_when(
-    str_detect(Subcode1,"(?i)Eval*") ~ "Evaluating",
-    str_detect(Subcode1, "(?i)Ambig*")  ~ "Ambiguity",
-    str_detect(Subcode1, "(?i)Alte*")  ~ "Alternative",
-    str_detect(Subcode1, "(?i)Relau*")  ~ "Relaunch",
-    TRUE ~ Subcode1))) %>%
-  mutate(Subcode1 = recode(Subcode1, `Frame` = "")) %>%
-  mutate(Subcode2 = case_when(
-    str_detect(Subcode2,"(?i)Eval*") ~ "Evaluating",
-    str_detect(Subcode2, "(?i)Ambig*")  ~ "Ambiguity",
-    str_detect(Subcode2, "(?i)Alte*")  ~ "Alternative",
-    str_detect(Subcode2, "(?i)Relau*")  ~ "Relaunch",
-    TRUE ~ Subcode2)) %>%
-  mutate(Subcode2 = recode(Subcode2, `?` = "", `?*` = "", `*` = "", `END` = "", `NC` = "")) %>%
-  mutate_all(na_if,"") %>%
-  mutate(Eval1 = ifelse(Subcode1 != "Evaluating" | is.na(Subcode1),0,1)) %>%
-  mutate(Ambig1 = ifelse(Subcode1 != "Ambiguity" | is.na(Subcode1),0,1)) %>%
-  mutate(Alt1 = ifelse(Subcode1 != "Alternative" | is.na(Subcode1),0,1)) %>%
-  mutate(Rel1 = ifelse(Subcode1 != "Relaunch" | is.na(Subcode1),0,1)) %>%
-  mutate(Eval2 = ifelse(Subcode2 != "Evaluating" | is.na(Subcode2),0,1)) %>%
-  mutate(Ambig2 = ifelse(Subcode2 != "Ambiguity" | is.na(Subcode2),0,1)) %>%
-  mutate(Alt2 = ifelse(Subcode2 != "Alternative" | is.na(Subcode2),0,1)) %>%
-  mutate(Rel2 = ifelse(Subcode2 != "Relaunch" | is.na(Subcode2),0,1)) %>%
-  mutate(Eval_Any = ifelse(Eval1 == 1 | Eval1 == 1, 1, 0)) %>%
-  mutate(Ambig_Any = ifelse(Ambig1 == 1 | Ambig2 == 1, 1, 0)) %>%
-  mutate(Alt_Any = ifelse(Alt1 == 1 | Alt2 == 1, 1, 0)) %>%
-  mutate(Rel_Any = ifelse(Rel1 == 1 | Rel2 == 1, 1, 0)) %>%
-  mutate(EvalWords = ifelse(Eval_Any == 1, Words, 0)) %>%
-  mutate(AmbigWords = ifelse(Ambig_Any == 1, Words, 0)) %>%
-  mutate(AltWords = ifelse(Alt_Any == 1, Words, 0)) %>%
-  mutate(RelWords = ifelse(Rel_Any == 1, Words, 0)) 
+df_full <- read_csv("McDonnell_CLEAN.csv")
 
 ```
 
-# Kappas - Simulation
-## ELA
+# **Simulations**
+## Kappas {.tabset}
+
+### ELA
+
 ```{r echo=FALSE}
 #### Descriptives and Graphs ####
 # SHINY
@@ -115,8 +73,8 @@ ui <- fluidPage(
 server <- function(input, output) {
   simData <- reactive({
     df_full %>%
-      filter(Content == "ELA", Pair == input$pair,
-             Cycle == input$cycle, PrePost == input$prepost) %>%
+      filter(Content == "ELA", Pair %in% input$pair,
+             Cycle %in% input$cycle, PrePost %in% input$prepost) %>%
       select(Simulation1, Simulation2)
     })
   
@@ -133,7 +91,7 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-## Math
+### Math 
 ```{r echo=FALSE}
 #### Descriptives and Graphs ####
 # SHINY
@@ -172,8 +130,8 @@ ui <- fluidPage(
 server <- function(input, output) {
   simData <- reactive({
     df_full %>%
-      filter(Content == "Math", Pair == input$pair,
-             Cycle == input$cycle, PrePost == input$prepost) %>%
+      filter(Content == "Math", Pair %in% input$pair,
+             Cycle %in% input$cycle, PrePost %in% input$prepost) %>%
       select(Simulation1, Simulation2)
     })
   
@@ -191,125 +149,8 @@ shinyApp(ui = ui, server = server)
 ```
 
 
-# Kappas - Subcodes
-## ELA
-```{r echo=FALSE}
-#### Descriptives and Graphs ####
-# SHINY
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select PrePost
-      checkboxGroupInput(inputId = "prepost", 
-                  label = "Pre/Post",
-                  choices = c("Pre", "Post"),
-                  selected = "Pre"),
-      #Select Cycle
-      checkboxGroupInput(inputId = "cycle", 
-                  label = "Cycle",
-                  choices = c("B", "C"),
-                  selected = "B"),
-      #Select Pair
-      checkboxGroupInput(inputId = "pair", 
-                  label = "Pair",
-                  choices = c("Eagle", "Elephant", "Rabbit", "Raven"),
-                  selected = "Rabbit")
-    ),
-    mainPanel(tabPanel(
-      "Sub",
-      fluidRow(
-        verbatimTextOutput("Table"),
-        verbatimTextOutput("Kappa")
-        )
-    ))
-  )
-)
-
-
-# Define Server ####
-server <- function(input, output) {
-  subData <- reactive({
-    df_full %>%
-      filter(Content == "ELA", Pair == input$pair,
-             Cycle == input$cycle, PrePost == input$prepost) %>%
-      select(Subcode1, Subcode2)
-    })
-  
-  output$Table <- renderPrint({
-    table(subData()$Subcode1, subData()$Subcode2)
-  })
-    output$Kappa <- renderPrint({
-    kappa2(subData())
-  })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-
-## Math
-```{r echo=FALSE}
-#### Descriptives and Graphs ####
-# SHINY
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select PrePost
-      checkboxGroupInput(inputId = "prepost", 
-                  label = "Pre/Post",
-                  choices = c("Pre", "Post"),
-                  selected = "Pre"),
-      #Select Cycle
-      checkboxGroupInput(inputId = "cycle", 
-                  label = "Cycle",
-                  choices = c("B", "C"),
-                  selected = "B"),
-      #Select Pair
-      checkboxGroupInput(inputId = "pair", 
-                  label = "Pair",
-                  choices = c("Eggplant", "Endive", "Radish", "Rutabaga"),
-                  selected = "Radish")
-    ),
-    mainPanel(tabPanel(
-      "Sub",
-      fluidRow(
-        verbatimTextOutput("Table"),
-        verbatimTextOutput("Kappa")
-        )
-    ))
-  )
-)
-
-
-# Define Server ####
-server <- function(input, output) {
-  subData <- reactive({
-    df_full %>%
-      filter(Content == "Math", Pair == input$pair,
-             Cycle == input$cycle, PrePost == input$prepost) %>%
-      select(Subcode1, Subcode2)
-    })
-  
-  output$Table <- renderPrint({
-    table(subData()$Subcode1, subData()$Subcode2)
-  })
-    output$Kappa <- renderPrint({
-    kappa2(subData())
-  })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-
-
-# Plots - Simulations
-
-## Turns
+## Plots {.tabset}
+### Turns
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
@@ -341,9 +182,8 @@ ui <- fluidPage(
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Content == input$content) %>%
+      filter(Content %in% input$content) %>%
       group_by_at(vars(input$col1, input$col2)) %>%
       mutate(Sim_Pct = mean(Simulation1*100))
   })
@@ -364,8 +204,7 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-
-## Words (Overall)
+### Words
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
@@ -382,12 +221,12 @@ ui <- fluidPage(
                   colnames(df_full), 
                   selected = "Cycle")
     ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
+    mainPanel(
+      tabsetPanel(type = "tabs",
+        tabPanel("Overall", plotOutput("mainPlot1")),
+        tabPanel("in Sim", plotOutput("mainPlot2"))
       )
-    )))
+    ))
   )
 
 # Define Server ####
@@ -395,19 +234,32 @@ server <- function(input, output) {
   chartData <- reactive({
     req(input$content, input$col) 
     df_full %>%
-      filter(Content == input$content, is.na(Actor) == FALSE) %>%
+      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
       group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_SimWords = mean(SimWords)/mean(Words)*100)
+      mutate(Pct_SimWords = mean(SimWords)/mean(Words)*100) %>%
+      mutate(Tot_Words = sum(Words)) %>%
+      mutate(Tot_SimWords = sum(SimWords))
     })
   
-  output$mainPlot <- renderPlot({
+  output$mainPlot1 <- renderPlot({
     p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Pct_SimWords", fill = "Actor")) + 
+           aes_string(x = input$col, y = "Tot_Words", fill = "Actor")) + 
       geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Pct_SimWords, digits = 2)), 
+      geom_text(aes(label=round(Tot_Words, digits = 2)), 
                 position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
+    coord_cartesian(ylim = c(0, 60000)) 
+    plot(p2)
+    })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=chartData(), 
+           aes_string(x = input$col, y = "Tot_SimWords", fill = "Actor")) + 
+      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Tot_SimWords, digits = 2)), 
+                position = position_dodge(width = 1), na.rm = TRUE) +
+    coord_cartesian(ylim = c(0, 60000)) 
     plot(p2)
     })
 }
@@ -417,51 +269,59 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-## Words (in Sim)
+
+# **Subcodes**
+## Kappas {.tabset}
+### ELA
 ```{r echo=FALSE}
+#### Descriptives and Graphs ####
+# SHINY
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
-      #Select Variables as Groups
-      selectInput(inputId = "col", 
-                  label = "Variable1",
-                  colnames(df_full), 
-                  selected = "Cycle")
+      #Select PrePost
+      checkboxGroupInput(inputId = "prepost", 
+                  label = "Pre/Post",
+                  choices = c("Pre", "Post"),
+                  selected = "Pre"),
+      #Select Cycle
+      checkboxGroupInput(inputId = "cycle", 
+                  label = "Cycle",
+                  choices = c("B", "C"),
+                  selected = "B"),
+      #Select Pair
+      checkboxGroupInput(inputId = "pair", 
+                  label = "Pair",
+                  choices = c("Eagle", "Elephant", "Rabbit", "Raven"),
+                  selected = "Rabbit")
     ),
     mainPanel(tabPanel(
-      "Plots",
+      "Sub",
       fluidRow(
-        plotOutput("mainPlot")
-      )
-    )))
+        verbatimTextOutput("Table"),
+        verbatimTextOutput("Kappa")
+        )
+    ))
   )
+)
+
 
 # Define Server ####
 server <- function(input, output) {
-  chartData <- reactive({
-    req(input$content, input$col) 
+  subData <- reactive({
     df_full %>%
-      filter(Sim_Any == 1, Content == input$content, is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
-      mutate(Mean_SimWords = mean(Words))
+      filter(Content == "ELA", Pair %in% input$pair,
+             Cycle %in% input$cycle, PrePost %in% input$prepost) %>%
+      select(Subcode1, Subcode2)
     })
   
-  output$mainPlot <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Mean_SimWords", fill = "Actor")) + 
-      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
-      scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Mean_SimWords, digits = 2)), 
-                position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
-    plot(p2)
-    })
+  output$Table <- renderPrint({
+    table(subData()$Subcode1, subData()$Subcode2)
+  })
+    output$Kappa <- renderPrint({
+    kappa2(subData())
+  })
 }
 
 # Launch Shiny App ####
@@ -469,9 +329,67 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-# Plots - Subcodes
-## Turns
-### Ambiguities
+### Math
+```{r echo=FALSE}
+#### Descriptives and Graphs ####
+# SHINY
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      #Select PrePost
+      checkboxGroupInput(inputId = "prepost", 
+                  label = "Pre/Post",
+                  choices = c("Pre", "Post"),
+                  selected = "Pre"),
+      #Select Cycle
+      checkboxGroupInput(inputId = "cycle", 
+                  label = "Cycle",
+                  choices = c("B", "C"),
+                  selected = "B"),
+      #Select Pair
+      checkboxGroupInput(inputId = "pair", 
+                  label = "Pair",
+                  choices = c("Eggplant", "Endive", "Radish", "Rutabaga"),
+                  selected = "Radish")
+    ),
+    mainPanel(tabPanel(
+      "Sub",
+      fluidRow(
+        verbatimTextOutput("Table"),
+        verbatimTextOutput("Kappa")
+        )
+    ))
+  )
+)
+
+
+# Define Server ####
+server <- function(input, output) {
+  subData <- reactive({
+    df_full %>%
+      filter(Content == "Math", Pair %in% input$pair,
+             Cycle %in% input$cycle, PrePost %in% input$prepost) %>%
+      select(Subcode1, Subcode2)
+    })
+  
+  output$Table <- renderPrint({
+    table(subData()$Subcode1, subData()$Subcode2)
+  })
+    output$Kappa <- renderPrint({
+    kappa2(subData())
+  })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
+
+## Plots 
+### Ambiguities {.tabset}
+#### Turns
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
@@ -505,7 +423,7 @@ server <- function(input, output) {
   chartData <- reactive({
     req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Sim_Any == 1, Content == input$content) %>%
+      filter(Content %in% input$content) %>%
       group_by_at(vars(input$col1, input$col2)) %>%
       mutate(Ambig_Pct = mean(Ambig1*100))
   })
@@ -515,8 +433,9 @@ server <- function(input, output) {
            aes_string(x = input$col1, y = "Ambig_Pct", fill = input$col2)) + 
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Ambig_Pct, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      geom_text(aes(label=round(Ambig_Pct, digits = 2)), 
+                position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,20))
     plot(p1)
   })
 }
@@ -526,8 +445,60 @@ shinyApp(ui = ui, server = server)
 
 ```
 
+#### Words
+```{r echo=FALSE}
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      #Select Content
+      selectInput(inputId = "content", 
+                  label = "Content",
+                  choices = unique(df_full$Content),
+                  selected = "ELA"),
+      #Select Variables as Groups
+      selectInput(inputId = "col", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "Cycle")
+    ),
+    mainPanel(
+      tabsetPanel(type = "tabs",
+        tabPanel("Overall", plotOutput("mainPlot1"))
+      )
+    ))
+  )
 
-### Alternatives
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    req(input$content, input$col) 
+    df_full %>%
+      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
+      group_by_at(vars(input$col, Actor)) %>%
+      mutate(Pct_Ambig = mean(AmbigWords)/mean(Words)*100) %>%
+      mutate(Tot_Amibig = sum(AmbigWords))
+    })
+  
+  output$mainPlot1 <- renderPlot({
+    p2 <- ggplot(data=chartData(), 
+           aes_string(x = input$col, y = "Tot_Amibig", fill = "Actor")) + 
+      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Tot_Amibig, digits = 2)), 
+                position = position_dodge(width = 1), na.rm = TRUE) +
+    coord_cartesian(ylim = c(0, 15000)) 
+    plot(p2)
+    })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
+### Alternatives {.tabset}
+#### Turns
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
@@ -561,7 +532,7 @@ server <- function(input, output) {
   chartData <- reactive({
     req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Sim_Any == 1, Content == input$content) %>%
+      filter(Sim_Any == 1, Content %in% input$content) %>%
       group_by_at(vars(input$col1, input$col2)) %>%
       mutate(Alt_Pct = mean(Alt1*100))
   })
@@ -572,7 +543,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Alt_Pct, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,20))
     plot(p1)
   })
 }
@@ -582,10 +553,60 @@ shinyApp(ui = ui, server = server)
 
 ```
 
+#### Words
+```{r echo=FALSE}
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      #Select Content
+      selectInput(inputId = "content", 
+                  label = "Content",
+                  choices = unique(df_full$Content),
+                  selected = "ELA"),
+      #Select Variables as Groups
+      selectInput(inputId = "col", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "Cycle")
+    ),
+    mainPanel(
+      tabsetPanel(type = "tabs",
+        tabPanel("Overall", plotOutput("mainPlot1"))
+      )
+    ))
+  )
 
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    req(input$content, input$col) 
+    df_full %>%
+      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
+      group_by_at(vars(input$col, Actor)) %>%
+      mutate(Pct_Alt = mean(AltWords)/mean(Words)*100) %>%
+      mutate(Tot_Alt = sum(AltWords))
+    })
+  
+  output$mainPlot1 <- renderPlot({
+    p2 <- ggplot(data=chartData(), 
+           aes_string(x = input$col, y = "Tot_Alt", fill = "Actor")) + 
+      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Tot_Alt, digits = 2)), 
+                position = position_dodge(width = 1), na.rm = TRUE) +
+    coord_cartesian(ylim = c(0, 15000)) 
+    plot(p2)
+    })
+}
 
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
 
-### Weighing Alts.
+```
+
+### Weighing Alts. {.tabset}
+#### Turns
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
@@ -619,7 +640,7 @@ server <- function(input, output) {
   chartData <- reactive({
     req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Sim_Any == 1, Content == input$content) %>%
+      filter(Sim_Any == 1, Content %in% input$content) %>%
       group_by_at(vars(input$col1, input$col2)) %>%
       mutate(Eval_Pct = mean(Eval1*100))
   })
@@ -629,8 +650,9 @@ server <- function(input, output) {
            aes_string(x = input$col1, y = "Eval_Pct", fill = input$col2)) + 
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Eval_Pct, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      geom_text(aes(label=round(Eval_Pct, digits = 2)), 
+                position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,20))
     plot(p1)
   })
 }
@@ -640,8 +662,60 @@ shinyApp(ui = ui, server = server)
 
 ```
 
+#### Words
+```{r echo=FALSE}
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      #Select Content
+      selectInput(inputId = "content", 
+                  label = "Content",
+                  choices = unique(df_full$Content),
+                  selected = "ELA"),
+      #Select Variables as Groups
+      selectInput(inputId = "col", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "Cycle")
+    ),
+    mainPanel(
+      tabsetPanel(type = "tabs",
+        tabPanel("Overall", plotOutput("mainPlot1"))
+      )
+    ))
+  )
 
-### Relaunches
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    req(input$content, input$col) 
+    df_full %>%
+      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
+      group_by_at(vars(input$col, Actor)) %>%
+      mutate(Pct_Eval = mean(EvalWords)/mean(Words)*100) %>%
+      mutate(Tot_Eval = sum(EvalWords))
+    })
+  
+  output$mainPlot1 <- renderPlot({
+    p2 <- ggplot(data=chartData(), 
+           aes_string(x = input$col, y = "Tot_Eval", fill = "Actor")) + 
+      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Tot_Eval, digits = 2)), 
+                position = position_dodge(width = 1), na.rm = TRUE) +
+    coord_cartesian(ylim = c(0, 15000)) 
+    plot(p2)
+    })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
+### Relaunches {.tabset}
+#### Turns
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
@@ -675,7 +749,7 @@ server <- function(input, output) {
   chartData <- reactive({
     req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Sim_Any == 1, Content == input$content) %>%
+      filter(Sim_Any == 1, Content %in% input$content) %>%
       group_by_at(vars(input$col1, input$col2)) %>%
       mutate(Rel_Pct = mean(Rel1*100))
   })
@@ -686,7 +760,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Rel_Pct, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,20))
     plot(p1)
   })
 }
@@ -696,10 +770,7 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-
-
-## Words (Overall)
-### Ambiguities
+#### Words
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
@@ -716,12 +787,11 @@ ui <- fluidPage(
                   colnames(df_full), 
                   selected = "Cycle")
     ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
+    mainPanel(
+      tabsetPanel(type = "tabs",
+        tabPanel("Overall", plotOutput("mainPlot1"))
       )
-    )))
+    ))
   )
 
 # Define Server ####
@@ -729,19 +799,20 @@ server <- function(input, output) {
   chartData <- reactive({
     req(input$content, input$col) 
     df_full %>%
-      filter(Content == input$content, is.na(Actor) == FALSE) %>%
+      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
       group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_Ambig = mean(AmbigWords)/mean(Words)*100)
+      mutate(Pct_Rel = mean(RelWords)/mean(Words)*100) %>%
+      mutate(Tot_Rel = sum(RelWords))
     })
   
-  output$mainPlot <- renderPlot({
+  output$mainPlot1 <- renderPlot({
     p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Pct_Ambig", fill = "Actor")) + 
+           aes_string(x = input$col, y = "Tot_Rel", fill = "Actor")) + 
       geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Pct_Ambig, digits = 2)), 
+      geom_text(aes(label=round(Tot_Rel, digits = 2)), 
                 position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
+    coord_cartesian(ylim = c(0, 15000)) 
     plot(p2)
     })
 }
@@ -750,370 +821,3 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 
 ```
-
-### Alternatives
-```{r echo=FALSE}
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
-      #Select Variables as Groups
-      selectInput(inputId = "col", 
-                  label = "Variable1",
-                  colnames(df_full), 
-                  selected = "Cycle")
-    ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
-      )
-    )))
-  )
-
-# Define Server ####
-server <- function(input, output) {
-  chartData <- reactive({
-    req(input$content, input$col) 
-    df_full %>%
-      filter(Content == input$content, is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_Alt = mean(AltWords)/mean(Words)*100)
-    })
-  
-  output$mainPlot <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Pct_Alt", fill = "Actor")) + 
-      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
-      scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Pct_Alt, digits = 2)), 
-                position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
-    plot(p2)
-    })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-
-### Weighing Alt.
-```{r echo=FALSE}
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
-      #Select Variables as Groups
-      selectInput(inputId = "col", 
-                  label = "Variable1",
-                  colnames(df_full), 
-                  selected = "Cycle")
-    ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
-      )
-    )))
-  )
-
-# Define Server ####
-server <- function(input, output) {
-  chartData <- reactive({
-    req(input$content, input$col) 
-    df_full %>%
-      filter(Content == input$content, is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_Eval = mean(EvalWords)/mean(Words)*100)
-    })
-  
-  output$mainPlot <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Pct_Eval", fill = "Actor")) + 
-      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
-      scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Pct_Eval, digits = 2)), 
-                position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
-    plot(p2)
-    })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-
-### Relaunches
-```{r echo=FALSE}
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
-      #Select Variables as Groups
-      selectInput(inputId = "col", 
-                  label = "Variable1",
-                  colnames(df_full), 
-                  selected = "Cycle")
-    ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
-      )
-    )))
-  )
-
-# Define Server ####
-server <- function(input, output) {
-  chartData <- reactive({
-    req(input$content, input$col) 
-    df_full %>%
-      filter(Content == input$content, is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_Rel = mean(RelWords)/mean(Words)*100)
-    })
-  
-  output$mainPlot <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Pct_Rel", fill = "Actor")) + 
-      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
-      scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Pct_Rel, digits = 2)), 
-                position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
-    plot(p2)
-    })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-
-
-## Words (in Sim)
-### Ambiguities
-```{r echo=FALSE}
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
-      #Select Variables as Groups
-      selectInput(inputId = "col", 
-                  label = "Variable1",
-                  colnames(df_full), 
-                  selected = "Cycle")
-    ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
-      )
-    )))
-  )
-
-# Define Server ####
-server <- function(input, output) {
-  chartData <- reactive({
-    req(input$content, input$col) 
-    df_full %>%
-      filter(Sim_Any == 1, Content == input$content, is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
-      mutate(Mean_Ambig = mean(Words))
-    })
-  
-  output$mainPlot <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Mean_Ambig", fill = "Actor")) + 
-      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
-      scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Mean_Ambig, digits = 2)), 
-                position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
-    plot(p2)
-    })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-
-### Alternatives
-```{r echo=FALSE}
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
-      #Select Variables as Groups
-      selectInput(inputId = "col", 
-                  label = "Variable1",
-                  colnames(df_full), 
-                  selected = "Cycle")
-    ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
-      )
-    )))
-  )
-
-# Define Server ####
-server <- function(input, output) {
-  chartData <- reactive({
-    req(input$content, input$col) 
-    df_full %>%
-      filter(Sim_Any == 1, Content == input$content, is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
-      mutate(Mean_Alt = mean(Words))
-    })
-  
-  output$mainPlot <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Mean_Alt", fill = "Actor")) + 
-      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
-      scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Mean_Alt, digits = 2)), 
-                position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
-    plot(p2)
-    })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-
-### Weighing Alt.
-```{r echo=FALSE}
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
-      #Select Variables as Groups
-      selectInput(inputId = "col", 
-                  label = "Variable1",
-                  colnames(df_full), 
-                  selected = "Cycle")
-    ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
-      )
-    )))
-  )
-
-# Define Server ####
-server <- function(input, output) {
-  chartData <- reactive({
-    req(input$content, input$col) 
-    df_full %>%
-      filter(Sim_Any == 1, Content == input$content, is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
-      mutate(Mean_Eval = mean(Words))
-    })
-  
-  output$mainPlot <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Mean_Eval", fill = "Actor")) + 
-      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
-      scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Mean_Eval, digits = 2)), 
-                position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
-    plot(p2)
-    })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-
-### Relaunches
-```{r echo=FALSE}
-# Define UI ####
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
-      #Select Variables as Groups
-      selectInput(inputId = "col", 
-                  label = "Variable1",
-                  colnames(df_full), 
-                  selected = "Cycle")
-    ),
-    mainPanel(tabPanel(
-      "Plots",
-      fluidRow(
-        plotOutput("mainPlot")
-      )
-    )))
-  )
-
-# Define Server ####
-server <- function(input, output) {
-  chartData <- reactive({
-    req(input$content, input$col) 
-    df_full %>%
-      filter(Sim_Any == 1, Content == input$content, is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
-      mutate(Mean_Rel = mean(Words))
-    })
-  
-  output$mainPlot <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Mean_Rel", fill = "Actor")) + 
-      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
-      scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Mean_Rel, digits = 2)), 
-                position = position_dodge(width = 1), na.rm = TRUE) +
-    coord_cartesian(ylim = c(0, 50)) 
-    plot(p2)
-    })
-}
-
-# Launch Shiny App ####
-shinyApp(ui = ui, server = server)
-
-```
-

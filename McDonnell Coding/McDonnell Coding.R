@@ -4,8 +4,8 @@ library(pacman)
 pacman::p_load("tidyverse", "readxl", "irr", "sjmisc") 
 
 # Import ELA and Math Data
-df_ELA <- read_excel("Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_ELA_MASTER.xlsx")
-df_MATH <- read_excel("Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_MATH_MASTER.xlsx")
+df_ELA <- read_excel("~/Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_ELA_MASTER.xlsx")
+df_MATH <- read_excel("~/Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_MATH_MASTER.xlsx")
 # Stack and Clean ELA and Math 
 df_full <- rbind(df_ELA, df_MATH) %>%
   drop_na(Content) %>%
@@ -50,7 +50,10 @@ df_full <- rbind(df_ELA, df_MATH) %>%
   mutate(EvalWords = ifelse(Eval_Any == 1, Words, 0)) %>%
   mutate(AmbigWords = ifelse(Ambig_Any == 1, Words, 0)) %>%
   mutate(AltWords = ifelse(Alt_Any == 1, Words, 0)) %>%
-  mutate(RelWords = ifelse(Rel_Any == 1, Words, 0)) 
+  mutate(RelWords = ifelse(Rel_Any == 1, Words, 0)) %>%
+  select(Content:Actor, Simulation1:RelWords)
+
+write_csv(df_full, "~/Dropbox/GitHub/McDonnell/McDonnell Coding/McDonnell_CLEAN.csv")
   
 ##### Kappas #####
 # ELA - Overall
