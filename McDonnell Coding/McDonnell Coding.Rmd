@@ -150,22 +150,17 @@ shinyApp(ui = ui, server = server)
 
 
 ## Plots {.tabset}
-### Turns
+### % of Turns (Overall)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
       #Select Variables as Groups
       selectInput(inputId = "col1", 
                   label = "Variable1",
                   colnames(df_full), 
-                  selected = "HiLo"),
+                  selected = "Content"),
       selectInput(inputId = "col2", 
                   label = "Variable2",
                   colnames(df_full), 
@@ -174,7 +169,9 @@ ui <- fluidPage(
     mainPanel(tabPanel(
       "Plots",
       fluidRow(
-        plotOutput("mainPlot")
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
         )
     )))
   )
@@ -183,19 +180,30 @@ ui <- fluidPage(
 server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
-      filter(Content %in% input$content) %>%
       group_by_at(vars(input$col1, input$col2)) %>%
-      mutate(Sim_Pct = mean(Simulation1*100))
+      mutate(Pct_Sim = mean(Sim_Any*100))
   })
   
-  output$mainPlot <- renderPlot({
-    p1 <- ggplot(data=chartData(), 
-           aes_string(x = input$col1, y = "Sim_Pct", fill = input$col2)) + 
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Pct_Sim", fill = input$col2)) + 
+      ggtitle("ELA") +
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Sim_Pct, digits = 2)), position = position_dodge(width = 1)) +
+      geom_text(aes(label=round(Pct_Sim, digits = 2)), position = position_dodge(width = 1)) +
       coord_cartesian(ylim = c(0,50))
     plot(p1)
+  })
+
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Pct_Sim", fill = input$col2)) + 
+      ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Pct_Sim, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,50))
+    plot(p2)
   })
 }
 
@@ -204,57 +212,55 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-### Words
+### # of Words (by Actor)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
       #Select Variables as Groups
       selectInput(inputId = "col", 
                   label = "Variable1",
                   colnames(df_full), 
-                  selected = "Cycle")
+                  selected = "HiLo")
     ),
-    mainPanel(
-      tabsetPanel(type = "tabs",
-        tabPanel("Overall", plotOutput("mainPlot1")),
-        tabPanel("in Sim", plotOutput("mainPlot2"))
-      )
-    ))
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
+        ))
   )
 
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col) 
     df_full %>%
-      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
       group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_SimWords = mean(SimWords)/mean(Words)*100) %>%
+      filter(!is.na(Actor)) %>%
       mutate(Tot_Words = sum(Words)) %>%
-      mutate(Tot_SimWords = sum(SimWords))
+      mutate(Tot_SimWords = sum(SimWords)) %>%
+      mutate(Pct_SimWords = mean(SimWords)/mean(Words)*100)
     })
   
   output$mainPlot1 <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
            aes_string(x = input$col, y = "Tot_Words", fill = "Actor")) + 
+      ggtitle("ELA") +
       geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Tot_Words, digits = 2)), 
                 position = position_dodge(width = 1), na.rm = TRUE) +
     coord_cartesian(ylim = c(0, 60000)) 
-    plot(p2)
+    plot(p1)
     })
   
   output$mainPlot2 <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
            aes_string(x = input$col, y = "Tot_SimWords", fill = "Actor")) + 
+      ggtitle("Math") +
       geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Tot_SimWords, digits = 2)), 
@@ -269,6 +275,70 @@ shinyApp(ui = ui, server = server)
 
 ```
 
+### Median (per Transcript)
+```{r echo=FALSE}
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      #Select Variables as Groups
+      selectInput(inputId = "col1", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "Content"),
+      selectInput(inputId = "col2", 
+                  label = "Variable2",
+                  colnames(df_full), 
+                  selected = "HiLo")
+    ),
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
+    ))
+  )
+
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    df_full %>%
+      group_by(Pair, Cycle, PrePost) %>%
+      mutate(Sim_Med = median(Sim_Cum_Pair, na.rm = TRUE)) %>%
+      ungroup() %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
+      mutate(Sim_Mean_Med= mean(Sim_Med, na.rm = TRUE)) 
+  })
+  
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Sim_Mean_Med", fill = input$col2)) + 
+      ggtitle("ELA") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Sim_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
+    plot(p1)
+  })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Sim_Mean_Med", fill = input$col2)) + 
+      ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Sim_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
+    plot(p2)
+  })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
 
 # **Subcodes**
 ## Kappas {.tabset}
@@ -389,22 +459,17 @@ shinyApp(ui = ui, server = server)
 
 ## Plots 
 ### Ambiguities {.tabset}
-#### Turns
+#### % of Turns (Overall)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
       #Select Variables as Groups
       selectInput(inputId = "col1", 
                   label = "Variable1",
                   colnames(df_full), 
-                  selected = "HiLo"),
+                  selected = "Content"),
       selectInput(inputId = "col2", 
                   label = "Variable2",
                   colnames(df_full), 
@@ -413,7 +478,9 @@ ui <- fluidPage(
     mainPanel(tabPanel(
       "Plots",
       fluidRow(
-        plotOutput("mainPlot")
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
         )
     )))
   )
@@ -421,22 +488,31 @@ ui <- fluidPage(
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Content %in% input$content) %>%
       group_by_at(vars(input$col1, input$col2)) %>%
-      mutate(Ambig_Pct = mean(Ambig1*100))
+      mutate(Pct_Ambig = mean(Ambig_Any*100))
   })
   
-  output$mainPlot <- renderPlot({
-    p1 <- ggplot(data=chartData(), 
-           aes_string(x = input$col1, y = "Ambig_Pct", fill = input$col2)) + 
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Pct_Ambig", fill = input$col2)) + 
+      ggtitle("ELA") +
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Ambig_Pct, digits = 2)), 
-                position = position_dodge(width = 1)) +
+      geom_text(aes(label=round(Pct_Ambig, digits = 2)), position = position_dodge(width = 1)) +
       coord_cartesian(ylim = c(0,50))
     plot(p1)
+  })
+
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Pct_Ambig", fill = input$col2)) + 
+      ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Pct_Ambig, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,50))
+    plot(p2)
   })
 }
 
@@ -445,47 +521,56 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-#### Words
+#### # of Words (by Actor)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
       #Select Variables as Groups
       selectInput(inputId = "col", 
                   label = "Variable1",
                   colnames(df_full), 
                   selected = "Cycle")
     ),
-    mainPanel(
-      tabsetPanel(type = "tabs",
-        tabPanel("Overall", plotOutput("mainPlot1"))
-      )
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
     ))
   )
 
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col) 
     df_full %>%
-      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
+      filter(is.na(Actor) == FALSE) %>%
       group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_Ambig = mean(AmbigWords)/mean(Words)*100) %>%
-      mutate(Tot_Amibig = sum(AmbigWords))
+      mutate(Tot_Ambig = sum(AmbigWords))
     })
   
   output$mainPlot1 <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
-           aes_string(x = input$col, y = "Tot_Amibig", fill = "Actor")) + 
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col, y = "Tot_Ambig", fill = "Actor")) + 
+           ggtitle("ELA") +
       geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Tot_Amibig, digits = 2)), 
+      geom_text(aes(label=round(Tot_Ambig, digits = 2)), 
+                position = position_dodge(width = 1), na.rm = TRUE) +
+    coord_cartesian(ylim = c(0, 15000)) 
+    plot(p1)
+    })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col, y = "Tot_Ambig", fill = "Actor")) + 
+            ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Tot_Ambig, digits = 2)), 
                 position = position_dodge(width = 1), na.rm = TRUE) +
     coord_cartesian(ylim = c(0, 15000)) 
     plot(p2)
@@ -497,18 +582,12 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-### Alternatives {.tabset}
-#### Turns
+#### Median (per Transcript)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
       #Select Variables as Groups
       selectInput(inputId = "col1", 
                   label = "Variable1",
@@ -522,29 +601,44 @@ ui <- fluidPage(
     mainPanel(tabPanel(
       "Plots",
       fluidRow(
-        plotOutput("mainPlot")
-        )
-    )))
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
+    ))
   )
 
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Sim_Any == 1, Content %in% input$content) %>%
-      group_by_at(vars(input$col1, input$col2)) %>%
-      mutate(Alt_Pct = mean(Alt1*100))
+      group_by(Pair, Cycle, PrePost) %>%
+      mutate(Ambig_Med = median(Ambig_Cum_Pair, na.rm = TRUE)) %>%
+      ungroup() %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
+      mutate(Ambig_Mean_Med= mean(Ambig_Med, na.rm = TRUE)) 
   })
   
-  output$mainPlot <- renderPlot({
-    p1 <- ggplot(data=chartData(), 
-           aes_string(x = input$col1, y = "Alt_Pct", fill = input$col2)) + 
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Ambig_Mean_Med", fill = input$col2)) + 
+            ggtitle("ELA") +
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Alt_Pct, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      geom_text(aes(label=round(Ambig_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
     plot(p1)
+  })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Ambig_Mean_Med", fill = input$col2)) + 
+            ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Ambig_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
+    plot(p2)
   })
 }
 
@@ -553,44 +647,116 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-#### Words
+### Alternatives {.tabset}
+#### % of Turns (Overall)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
+      #Select Variables as Groups
+      selectInput(inputId = "col1", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "Content"),
+      selectInput(inputId = "col2", 
+                  label = "Variable2",
+                  colnames(df_full), 
+                  selected = "HiLo")
+    ),
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+        )
+    )))
+  )
+
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    df_full %>%
+      group_by_at(vars(input$col1, input$col2)) %>%
+      mutate(Pct_Alt = mean(Alt_Any*100))
+  })
+  
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Pct_Alt", fill = input$col2)) + 
+      ggtitle("ELA") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Pct_Alt, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,50))
+    plot(p1)
+  })
+
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Pct_Alt", fill = input$col2)) + 
+      ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Pct_Alt, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,50))
+    plot(p2)
+  })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
+#### # of Words (by Actor)
+```{r echo=FALSE}
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
       #Select Variables as Groups
       selectInput(inputId = "col", 
                   label = "Variable1",
                   colnames(df_full), 
                   selected = "Cycle")
     ),
-    mainPanel(
-      tabsetPanel(type = "tabs",
-        tabPanel("Overall", plotOutput("mainPlot1"))
-      )
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
     ))
   )
 
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col) 
     df_full %>%
-      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
+      filter(is.na(Actor) == FALSE) %>%
       group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_Alt = mean(AltWords)/mean(Words)*100) %>%
       mutate(Tot_Alt = sum(AltWords))
     })
   
   output$mainPlot1 <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
            aes_string(x = input$col, y = "Tot_Alt", fill = "Actor")) + 
+            ggtitle("ELA") +
+      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Tot_Alt, digits = 2)), 
+                position = position_dodge(width = 1), na.rm = TRUE) +
+    coord_cartesian(ylim = c(0, 15000)) 
+    plot(p1)
+    })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col, y = "Tot_Alt", fill = "Actor")) + 
+            ggtitle("Math") +
       geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Tot_Alt, digits = 2)), 
@@ -605,18 +771,12 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-### Weighing Alts. {.tabset}
-#### Turns
+#### Median (per Simulation)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
       #Select Variables as Groups
       selectInput(inputId = "col1", 
                   label = "Variable1",
@@ -630,30 +790,44 @@ ui <- fluidPage(
     mainPanel(tabPanel(
       "Plots",
       fluidRow(
-        plotOutput("mainPlot")
-        )
-    )))
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
+    ))
   )
 
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Sim_Any == 1, Content %in% input$content) %>%
-      group_by_at(vars(input$col1, input$col2)) %>%
-      mutate(Eval_Pct = mean(Eval1*100))
+      group_by(Pair, Cycle, PrePost, Sim_Any) %>%
+      mutate(Alt_Med = median(AltCount, na.rm = TRUE)) %>%
+      ungroup() %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
+      mutate(Alt_Mean_Med= mean(Alt_Med, na.rm = TRUE)) 
   })
   
-  output$mainPlot <- renderPlot({
-    p1 <- ggplot(data=chartData(), 
-           aes_string(x = input$col1, y = "Eval_Pct", fill = input$col2)) + 
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Alt_Mean_Med", fill = input$col2)) + 
+            ggtitle("ELA") +
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Eval_Pct, digits = 2)), 
-                position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      geom_text(aes(label=round(Alt_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
     plot(p1)
+  })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Alt_Mean_Med", fill = input$col2)) + 
+            ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Alt_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
+    plot(p2)
   })
 }
 
@@ -662,44 +836,116 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-#### Words
+### Weighing Alts. {.tabset}
+#### % of Turns (Overall)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
+      #Select Variables as Groups
+      selectInput(inputId = "col1", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "Content"),
+      selectInput(inputId = "col2", 
+                  label = "Variable2",
+                  colnames(df_full), 
+                  selected = "HiLo")
+    ),
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+        )
+    )))
+  )
+
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    df_full %>%
+      group_by_at(vars(input$col1, input$col2)) %>%
+      mutate(Pct_Eval = mean(Eval_Any*100))
+  })
+  
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Pct_Eval", fill = input$col2)) + 
+      ggtitle("ELA") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Pct_Eval, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,50))
+    plot(p1)
+  })
+
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Pct_Eval", fill = input$col2)) + 
+      ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Pct_Eval, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,50))
+    plot(p2)
+  })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
+#### # of Words (by Actor)
+```{r echo=FALSE}
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
       #Select Variables as Groups
       selectInput(inputId = "col", 
                   label = "Variable1",
                   colnames(df_full), 
                   selected = "Cycle")
     ),
-    mainPanel(
-      tabsetPanel(type = "tabs",
-        tabPanel("Overall", plotOutput("mainPlot1"))
-      )
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
     ))
   )
 
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col) 
     df_full %>%
-      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
+      filter(is.na(Actor) == FALSE) %>%
       group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_Eval = mean(EvalWords)/mean(Words)*100) %>%
       mutate(Tot_Eval = sum(EvalWords))
     })
   
   output$mainPlot1 <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
            aes_string(x = input$col, y = "Tot_Eval", fill = "Actor")) + 
+            ggtitle("ELA") +
+      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Tot_Eval, digits = 2)), 
+                position = position_dodge(width = 1), na.rm = TRUE) +
+    coord_cartesian(ylim = c(0, 15000)) 
+    plot(p1)
+    })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col, y = "Tot_Eval", fill = "Actor")) + 
+            ggtitle("Math") +
       geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Tot_Eval, digits = 2)), 
@@ -714,18 +960,12 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-### Relaunches {.tabset}
-#### Turns
+#### Median (per Alternative)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
       #Select Variables as Groups
       selectInput(inputId = "col1", 
                   label = "Variable1",
@@ -739,29 +979,44 @@ ui <- fluidPage(
     mainPanel(tabPanel(
       "Plots",
       fluidRow(
-        plotOutput("mainPlot")
-        )
-    )))
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
+    ))
   )
 
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col1, input$col2) 
     df_full %>%
-      filter(Sim_Any == 1, Content %in% input$content) %>%
-      group_by_at(vars(input$col1, input$col2)) %>%
-      mutate(Rel_Pct = mean(Rel1*100))
+      group_by(Pair, Cycle, PrePost, Sim_Any, Alt_Cum) %>%
+      mutate(Eval_Med = median(EvalCount, na.rm = TRUE)) %>%
+      ungroup() %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
+      mutate(Eval_Mean_Med= mean(Eval_Med, na.rm = TRUE)) 
   })
   
-  output$mainPlot <- renderPlot({
-    p1 <- ggplot(data=chartData(), 
-           aes_string(x = input$col1, y = "Rel_Pct", fill = input$col2)) + 
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Eval_Mean_Med", fill = input$col2)) + 
+            ggtitle("ELA") +
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Rel_Pct, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      geom_text(aes(label=round(Eval_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
     plot(p1)
+  })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Eval_Mean_Med", fill = input$col2)) + 
+            ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Eval_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
+    plot(p2)
   })
 }
 
@@ -770,44 +1025,117 @@ shinyApp(ui = ui, server = server)
 
 ```
 
-#### Words
+### Relaunches {.tabset}
+
+#### % of Turns (Overall)
 ```{r echo=FALSE}
 # Define UI ####
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      #Select Content
-      selectInput(inputId = "content", 
-                  label = "Content",
-                  choices = unique(df_full$Content),
-                  selected = "ELA"),
+      #Select Variables as Groups
+      selectInput(inputId = "col1", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "Content"),
+      selectInput(inputId = "col2", 
+                  label = "Variable2",
+                  colnames(df_full), 
+                  selected = "HiLo")
+    ),
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+        )
+    )))
+  )
+
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    df_full %>%
+      group_by_at(vars(input$col1, input$col2)) %>%
+      mutate(Pct_Rel = mean(Rel_Any*100))
+  })
+  
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Pct_Rel", fill = input$col2)) + 
+      ggtitle("ELA") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Pct_Rel, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,50))
+    plot(p1)
+  })
+
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Pct_Rel", fill = input$col2)) + 
+      ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Pct_Rel, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,50))
+    plot(p2)
+  })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
+#### # of Words (by Actor)
+```{r echo=FALSE}
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
       #Select Variables as Groups
       selectInput(inputId = "col", 
                   label = "Variable1",
                   colnames(df_full), 
                   selected = "Cycle")
     ),
-    mainPanel(
-      tabsetPanel(type = "tabs",
-        tabPanel("Overall", plotOutput("mainPlot1"))
-      )
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
     ))
   )
 
 # Define Server ####
 server <- function(input, output) {
   chartData <- reactive({
-    req(input$content, input$col) 
     df_full %>%
-      filter(Content %in% input$content, is.na(Actor) == FALSE) %>%
+      filter(is.na(Actor) == FALSE) %>%
       group_by_at(vars(input$col, Actor)) %>%
-      mutate(Pct_Rel = mean(RelWords)/mean(Words)*100) %>%
       mutate(Tot_Rel = sum(RelWords))
     })
   
   output$mainPlot1 <- renderPlot({
-    p2 <- ggplot(data=chartData(), 
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
            aes_string(x = input$col, y = "Tot_Rel", fill = "Actor")) + 
+            ggtitle("ELA") +
+      geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Tot_Rel, digits = 2)), 
+                position = position_dodge(width = 1), na.rm = TRUE) +
+    coord_cartesian(ylim = c(0, 15000)) 
+    plot(p1)
+    })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col, y = "Tot_Rel", fill = "Actor")) + 
+            ggtitle("Math") +
       geom_bar(stat="identity", position = "dodge", na.rm = TRUE) + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Tot_Rel, digits = 2)), 
@@ -815,6 +1143,71 @@ server <- function(input, output) {
     coord_cartesian(ylim = c(0, 15000)) 
     plot(p2)
     })
+}
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
+
+#### Median (per Simulation)
+```{r echo=FALSE}
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      #Select Variables as Groups
+      selectInput(inputId = "col1", 
+                  label = "Variable1",
+                  colnames(df_full), 
+                  selected = "HiLo"),
+      selectInput(inputId = "col2", 
+                  label = "Variable2",
+                  colnames(df_full), 
+                  selected = "HiLo")
+    ),
+    mainPanel(tabPanel(
+      "Plots",
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), 
+                    plotOutput("mainPlot1"), 
+                    plotOutput("mainPlot2"))
+                 ))
+    ))
+  )
+
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    df_full %>%
+      group_by(Pair, Cycle, PrePost, Sim_Any) %>%
+      mutate(Rel_Med = median(RelCount, na.rm = TRUE)) %>%
+      ungroup() %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
+      mutate(Rel_Mean_Med= mean(Rel_Med, na.rm = TRUE)) 
+  })
+  
+  output$mainPlot1 <- renderPlot({
+    p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
+           aes_string(x = input$col1, y = "Rel_Mean_Med", fill = input$col2)) + 
+            ggtitle("ELA") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Rel_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
+    plot(p1)
+  })
+  
+  output$mainPlot2 <- renderPlot({
+    p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
+           aes_string(x = input$col1, y = "Rel_Mean_Med", fill = input$col2)) + 
+            ggtitle("Math") +
+      geom_bar(stat="identity", position = "dodge") + 
+      scale_fill_brewer(palette = "Set1") +
+      geom_text(aes(label=round(Rel_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      coord_cartesian(ylim = c(0,10))
+    plot(p2)
+  })
 }
 
 # Launch Shiny App ####

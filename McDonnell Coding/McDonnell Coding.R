@@ -1,7 +1,7 @@
 # Install Packages
 if (!require("pacman")) install.packages("pacman")
 library(pacman)
-pacman::p_load("tidyverse", "readxl", "irr", "sjmisc") 
+pacman::p_load("readxl", "irr", "sjmisc", "tidyverse", "data.table") 
 
 # Import ELA and Math Data
 df_ELA <- read_excel("~/Box Sync/McDonnell Teacher Learning Shared/Phase1_Coding_2020/Mechanisms Coding/Mechanisms_ELA_MASTER.xlsx")
@@ -17,8 +17,8 @@ df_full <- rbind(df_ELA, df_MATH) %>%
   mutate(Cycle = recode(Cycle, "1" = "A", "2" = "B", "3" = "C")) %>%
   filter(Cycle != "A") %>%
   mutate(Actor = recode(Actor, `Student:` = "")) %>%
-  mutate(Simulation1 = replace_na(Simulation1, value = 0)) %>%
-  mutate(Simulation2 = replace_na(Simulation2, value = 0)) %>%
+  mutate(Simulation1 = replace_na(Simulation1, 0)) %>%
+  mutate(Simulation2 = replace_na(Simulation2, 0)) %>%
   mutate(Sim_Any = ifelse(Simulation1 == 1 | Simulation2 == 1, 1, 0)) %>%
   mutate(SimWords = ifelse(Sim_Any == 1, Words, 0)) %>%
   mutate(Subcode1 = (case_when(
@@ -36,6 +36,7 @@ df_full <- rbind(df_ELA, df_MATH) %>%
     TRUE ~ Subcode2)) %>%
   mutate(Subcode2 = recode(Subcode2, `?` = "", `?*` = "", `*` = "", `END` = "", `NC` = "")) %>%
   mutate_all(na_if,"") %>%
+  # Create Indicator Variables
   mutate(Eval1 = ifelse(Subcode1 != "Evaluating" | is.na(Subcode1),0,1)) %>%
   mutate(Ambig1 = ifelse(Subcode1 != "Ambiguity" | is.na(Subcode1),0,1)) %>%
   mutate(Alt1 = ifelse(Subcode1 != "Alternative" | is.na(Subcode1),0,1)) %>%
@@ -44,6 +45,7 @@ df_full <- rbind(df_ELA, df_MATH) %>%
   mutate(Ambig2 = ifelse(Subcode2 != "Ambiguity" | is.na(Subcode2),0,1)) %>%
   mutate(Alt2 = ifelse(Subcode2 != "Alternative" | is.na(Subcode2),0,1)) %>%
   mutate(Rel2 = ifelse(Subcode2 != "Relaunch" | is.na(Subcode2),0,1)) %>%
+  # Across Raters
   mutate(Eval_Any = ifelse(Eval1 == 1 | Eval1 == 1, 1, 0)) %>%
   mutate(Ambig_Any = ifelse(Ambig1 == 1 | Ambig2 == 1, 1, 0)) %>%
   mutate(Alt_Any = ifelse(Alt1 == 1 | Alt2 == 1, 1, 0)) %>%
@@ -52,61 +54,40 @@ df_full <- rbind(df_ELA, df_MATH) %>%
   mutate(AmbigWords = ifelse(Ambig_Any == 1, Words, 0)) %>%
   mutate(AltWords = ifelse(Alt_Any == 1, Words, 0)) %>%
   mutate(RelWords = ifelse(Rel_Any == 1, Words, 0)) %>%
-  select(Content:Actor, Simulation1:RelWords)
+  # Generate Cumulative Count Variables
+  mutate(Sim_Cum = cumsum(ifelse(Sim_Any == 0, 0, 
+                                 ifelse(Sim_Any != lag(Sim_Any) | is.na(lag(Sim_Any)) , 1, 0)))) %>%
+  mutate(Sim_Cum = ifelse(Sim_Any == 1, Sim_Cum, NA)) %>%
+  mutate(Alt_Cum = cumsum(ifelse(Alt_Any == 0, 0, 
+                                 ifelse(Alt_Any != lag(Alt_Any) | is.na(lag(Alt_Any)) , 1, 0)))) %>%
+  # By Pair
+  group_by(Pair, Cycle, PrePost) %>%
+  mutate(Sim_Cum_Pair = cumsum(ifelse(Sim_Any == 0, 0, 
+                                      ifelse(Sim_Any != lag(Sim_Any) | is.na(lag(Sim_Any)) , 1, 0)))) %>%
+  mutate(Sim_Cum_Pair = ifelse(Sim_Any == 1, Sim_Cum_Pair, NA)) %>%
+  mutate(Ambig_Cum_Pair = cumsum(ifelse(Ambig_Any == 0, 0, 
+                                   ifelse(Ambig_Any != lag(Ambig_Any) | is.na(lag(Ambig_Any)) , 1, 0)))) %>%
+  mutate(Ambig_Cum_Pair = ifelse(Ambig_Any == 1, Ambig_Cum_Pair, NA)) %>%
+  ungroup() %>%
+  # Per Simulation
+  group_by(Pair, Cycle, PrePost, Sim_Cum) %>%
+  mutate(AltCount = cumsum(ifelse(Alt_Any == 0, 0, 1))) %>%
+  mutate(AltCount = ifelse(Alt_Any == 1, AltCount, NA)) %>%
+  mutate(RelCount = cumsum(ifelse(Rel_Any == 0, 0, 1))) %>%
+  mutate(RelCount = ifelse(Rel_Any == 1, RelCount, NA)) %>%
+  ungroup() %>%
+  # Per Alternative
+  group_by(Pair, Cycle, PrePost, Sim_Cum, Alt_Cum) %>%
+  mutate(EvalCount = cumsum(ifelse(Eval_Any == 0, 0, 1))) %>%
+  mutate(EvalCount = ifelse(Eval_Any == 1, EvalCount, NA)) %>%
+  ungroup() %>%
+  mutate(Obs = row_number()) %>%
+  # Select variables for analysis
+  dplyr::select(Obs, Content:Actor,                                                # Identifiers
+                Simulation1:Words,odd,                                             # Raw Codes
+                Eval1:Rel2, Sim_Any, Ambig_Any, Alt_Any, Eval_Any, Rel_Any,        # Generated Vars: Indicators
+                SimWords, AmbigWords, AltWords, EvalWords, RelWords,               # Generated Vars: Words
+                Sim_Cum:EvalCount)                                                  # Generated Vars: Counts
 
 write_csv(df_full, "~/Dropbox/GitHub/McDonnell/McDonnell Coding/McDonnell_CLEAN.csv")
-  
-
-#### ====Test Code for ShinyApp ==== ####
-## Kappas ####
-# ELA - Overall
-df_ELA <- df_full %>%
-  subset(Content == "ELA") %>%
-  select(Simulation1, Simulation2) 
-kappa2(df_ELA)
-
-## Descriptives and Graphs ####
-# ELA Simulation by Hi/Low
-df_plot1 <- df_full %>%
-  filter(Content == "Math") %>%
-  group_by_at(vars(HiLo)) %>%
-  mutate(Sim_Pct = mean(Simulation1*100))
-plot1 <- df_plot1 %>%
-  ggplot( 
-         aes_string(x = "HiLo", y = "Sim_Pct", fill = "HiLo")) + 
-    geom_bar(stat="identity", position = "dodge") + 
-    scale_fill_brewer(palette = "Set1") +
-    geom_text(aes(label=round(Sim_Pct, digits = 2)), position = position_dodge(width = 1)) +
-    coord_cartesian(ylim = c(0,50))
-plot1
-
-# ELA Pct Words by Hi/Low
-df_plot2 <- df_full %>%
-  filter(Content == "ELA", is.na(Actor) == FALSE) %>%
-  group_by(Cycle, Actor) %>%
-  mutate(Pct_SimWords = mean(SimWords)/mean(Words)*100)
-plot2 <- df_plot2 %>%
-  ggplot(
-    aes(factor(Cycle), Pct_SimWords, fill = Actor)) + 
-    geom_bar(stat="identity", position = "dodge") + 
-    scale_fill_brewer(palette = "Set1") +
-    geom_text(aes(label=round(Pct_SimWords, digits = 2)), position = position_dodge(width = 1)) +
-    coord_cartesian(ylim = c(0, 50)) 
-plot2
-
-# ELA Mean Words by Hi/Low
-df_plot3 <- df_full %>%
-  filter(Sim_Any == 1, Content == "ELA", is.na(Actor) == FALSE) %>%
-  group_by(Cycle, Actor) %>%
-  mutate(Pct_SimWords = mean(Words))
-plot3 <- df_plot3 %>%
-  ggplot(
-    aes(factor(Cycle), Pct_SimWords, fill = Actor)) + 
-  geom_bar(stat="identity", position = "dodge") + 
-  scale_fill_brewer(palette = "Set1") +
-  geom_text(aes(label=round(Pct_SimWords, digits = 2)), position = position_dodge(width = 1)) +
-  coord_cartesian(ylim = c(0, 50)) 
-plot3
-
-
 
