@@ -238,7 +238,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
-      group_by_at(vars(input$col, Actor)) %>%
+      group_by_at(vars(Content, input$col, Actor)) %>%
       filter(!is.na(Actor)) %>%
       mutate(Tot_Words = sum(Words)) %>%
       mutate(Tot_SimWords = sum(SimWords)) %>%
@@ -500,7 +500,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Pct_Ambig, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,30))
     plot(p1)
   })
 
@@ -511,7 +511,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Pct_Ambig, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,30))
     plot(p2)
   })
 }
@@ -548,7 +548,7 @@ server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
       filter(is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
+      group_by_at(vars(Content, input$col, Actor)) %>%
       mutate(Tot_Ambig = sum(AmbigWords))
     })
   
@@ -689,7 +689,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Pct_Alt, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,30))
     plot(p1)
   })
 
@@ -700,7 +700,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Pct_Alt, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,30))
     plot(p2)
   })
 }
@@ -737,7 +737,7 @@ server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
       filter(is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
+      group_by_at(vars(Content, input$col, Actor)) %>%
       mutate(Tot_Alt = sum(AltWords))
     })
   
@@ -878,7 +878,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Pct_Eval, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,30))
     plot(p1)
   })
 
@@ -889,7 +889,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Pct_Eval, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,30))
     plot(p2)
   })
 }
@@ -926,7 +926,7 @@ server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
       filter(is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
+      group_by_at(vars(Content, input$col, Actor)) %>%
       mutate(Tot_Eval = sum(EvalWords))
     })
   
@@ -1068,7 +1068,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Pct_Rel, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,30))
     plot(p1)
   })
 
@@ -1079,7 +1079,7 @@ server <- function(input, output) {
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
       geom_text(aes(label=round(Pct_Rel, digits = 2)), position = position_dodge(width = 1)) +
-      coord_cartesian(ylim = c(0,50))
+      coord_cartesian(ylim = c(0,30))
     plot(p2)
   })
 }
@@ -1116,7 +1116,7 @@ server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
       filter(is.na(Actor) == FALSE) %>%
-      group_by_at(vars(input$col, Actor)) %>%
+      group_by_at(vars(Content, input$col, Actor)) %>%
       mutate(Tot_Rel = sum(RelWords))
     })
   
