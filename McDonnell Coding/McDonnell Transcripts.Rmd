@@ -1,0 +1,201 @@
+---
+title: "McDonnell Coding"
+date: "Updated: `r format(Sys.time(), '%B %d, %Y')`"
+runtime: shiny
+output:
+  html_document:
+subtitle: Simulations and Subcodes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include = FALSE}
+# Install Packages
+library("tidyverse")
+library("irr")
+library("sjmisc")
+
+```
+
+``` {r include = FALSE}
+# Import ELA and Math Data
+df_full <- read_csv("McDonnell_CLEAN.csv")
+
+```
+
+# **Subcodes**
+## Plots
+### Transcript View
+``` {r echo=FALSE}
+
+# SHINY
+# Define UI ####
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      #Select Layers
+      checkboxGroupInput(inputId = "layers", 
+                  label = "Layers",
+                  choices = c("plotAmbig", "plotAlt", "plotEval"),
+                  selected = c("plotAmbig", "plotAlt", "plotEval")),
+      #Select by Groups
+      checkboxGroupInput(inputId = "content", 
+                  label = "Content",
+                  choices = unique(df_full$Content),
+                  selected = c("ELA")),
+      checkboxGroupInput(inputId = "cycle", 
+                  label = "Cycle",
+                  choices = unique(df_full$Cycle),
+                  selected = c("B")),
+      checkboxGroupInput(inputId = "hilo", 
+                  label = "HiLo",
+                  choices = unique(df_full$HiLo),
+                  selected = c("Hi")),
+      checkboxGroupInput(inputId = "prepost", 
+                  label = "PrePost",
+                  choices = unique(df_full$PrePost),
+                  selected = c("Pre")),
+      checkboxGroupInput(inputId = "actor", 
+                  label = "Actor",
+                  choices = c("T:", "C:"),
+                  selected = c("T:", "C:")),
+      #Select by Pair
+      checkboxGroupInput(inputId = "pair", 
+                  label = "Pair",
+                  choices = unique(df_full$Pair),
+                  selected = unique(df_full$Pair))
+    ),
+    mainPanel(plotOutput("plot1"),
+      ))
+  )
+
+
+# Define Server ####
+server <- function(input, output) {
+  chartData <- reactive({
+    df_full %>%
+      filter(Content %in% input$content, HiLo %in% input$hilo, Cycle %in% input$cycle,
+             PrePost %in% input$prepost, Actor %in% input$actor, Pair %in% input$pair)
+    })
+  
+  output$plot1 <- renderPlot({
+    if (all(c("plotAmbig","plotAlt","plotEval") %in% input$layers)) 
+      { return (
+  p1 <- ggplot(data=chartData()) +
+  facet_grid(vars(PairsCyclePrePost), scales = "free", space = "fixed") +
+  geom_rect(aes(xmin = 0, xmax = chartData()[[39]], ymin = 0.95, ymax = 1.05, 
+                group = chartData()[[8]]), fill = "gray75") +
+  geom_point(aes(x = ObsPair, y = plotAmbig), size = 2, alpha = .75, shape = "triangle", color = "green") +
+  geom_point(aes(x = ObsPair, y = plotAlt), size = 2, alpha = .75, shape = "circle", color = "blue") +
+  geom_point(aes(x = ObsPair, y = plotEval), size = 2, alpha = .75, shape = "square", color = "orange") +
+  coord_cartesian(ylim = c(0.75,1.25)) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+        legend.position = "none", strip.text.y = element_text(angle = 0))
+    )
+plot(p1)
+
+    } else if (all(c("plotAmbig","plotAlt") %in% input$layers)) 
+      { return (
+  p2 <- ggplot(data=chartData()) +
+  facet_grid(vars(PairsCyclePrePost), scales = "free", space = "fixed") +
+  geom_rect(aes(xmin = 0, xmax = chartData()[[39]], ymin = 0.95, ymax = 1.05, 
+                group = chartData()[[8]]), fill = "gray75") +
+  geom_point(aes(x = ObsPair, y = plotAmbig), size = 2, alpha = .75, shape = "triangle", color = "green") +
+  geom_point(aes(x = ObsPair, y = plotAlt), size = 2, alpha = .75, shape = "circle", color = "blue") +
+  coord_cartesian(ylim = c(0.75,1.25)) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+        legend.position = "none", strip.text.y = element_text(angle = 0))
+    )
+plot(p2)
+
+    } else if (all(c("plotAmbig","plotEval") %in% input$layers))
+    { return (
+  p3 <- ggplot(data=chartData()) +
+  facet_grid(vars(PairsCyclePrePost), scales = "free", space = "fixed") +
+  geom_rect(aes(xmin = 0, xmax = chartData()[[39]], ymin = 0.95, ymax = 1.05, 
+                group = chartData()[[8]]), fill = "gray75") +
+  geom_point(aes(x = ObsPair, y = plotAmbig), size = 2, alpha = .75, shape = "triangle", color = "green") +
+  geom_point(aes(x = ObsPair, y = plotEval), size = 2, alpha = .75, shape = "square", color = "orange") +
+  coord_cartesian(ylim = c(0.75,1.25)) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+        legend.position = "none", strip.text.y = element_text(angle = 0))
+    )
+plot(p3)
+
+    } else if (all(c("plotAlt","plotEval") %in% input$layers))
+    { return (
+  p4 <- ggplot(data=chartData()) +
+  facet_grid(vars(PairsCyclePrePost), scales = "free", space = "fixed") +
+  geom_rect(aes(xmin = 0, xmax = chartData()[[39]], ymin = 0.95, ymax = 1.05, 
+                group = chartData()[[8]]), fill = "gray75") +
+  geom_point(aes(x = ObsPair, y = plotAlt), size = 2, alpha = .75, shape = "circle", color = "blue") +
+  geom_point(aes(x = ObsPair, y = plotEval), size = 2, alpha = .75, shape = "square", color = "orange") +
+  coord_cartesian(ylim = c(0.75,1.25)) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+        legend.position = "none", strip.text.y = element_text(angle = 0))
+    )
+plot(p4)
+
+    } else if (all(c("plotAmbig") %in% input$layers))
+    { return (
+  p5 <- ggplot(data=chartData()) +
+  facet_grid(vars(PairsCyclePrePost), scales = "free", space = "fixed") +
+  geom_rect(aes(xmin = 0, xmax = chartData()[[39]], ymin = 0.95, ymax = 1.05, 
+                group = chartData()[[8]]), fill = "gray75") +
+  geom_point(aes(x = ObsPair, y = plotAmbig), size = 2, alpha = .75, shape = "triangle", color = "green") +
+  coord_cartesian(ylim = c(0.75,1.25)) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+        legend.position = "none", strip.text.y = element_text(angle = 0))
+    )
+plot(p5)
+
+    } else if (all(c("plotAlt") %in% input$layers))
+    { return (
+  p6 <- ggplot(data=chartData()) +
+  facet_grid(vars(PairsCyclePrePost), scales = "free", space = "fixed") +
+  geom_rect(aes(xmin = 0, xmax = chartData()[[39]], ymin = 0.95, ymax = 1.05, 
+                group = chartData()[[8]]), fill = "gray75") +
+  geom_point(aes(x = ObsPair, y = plotAlt), size = 2, alpha = .75, shape = "circle", color = "blue") +
+  coord_cartesian(ylim = c(0.75,1.25)) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+        legend.position = "none", strip.text.y = element_text(angle = 0))
+    )
+plot(p6)
+
+    } else if (all(c("plotEval") %in% input$layers))
+    { return (
+  p7 <- ggplot(data=chartData()) +
+  facet_grid(vars(PairsCyclePrePost), scales = "free", space = "fixed") +
+  geom_rect(aes(xmin = 0, xmax = chartData()[[39]], ymin = 0.95, ymax = 1.05, 
+                group = chartData()[[8]]), fill = "gray75") +
+  geom_point(aes(x = ObsPair, y = plotEval), size = 2, alpha = .75, shape = "square", color = "orange") +
+  coord_cartesian(ylim = c(0.75,1.25)) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+        legend.position = "none", strip.text.y = element_text(angle = 0))
+    )}
+      
+plot(p7)
+
+    })
+  }
+
+# Launch Shiny App ####
+shinyApp(ui = ui, server = server)
+
+```
