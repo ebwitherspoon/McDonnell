@@ -42,10 +42,11 @@ df_full <- rbind(df_ELA, df_MATH) %>%
     str_detect(Sub_Final, "(?i)Relau*")  ~ "Relaunch",
     TRUE ~ Sub_Final)) %>%
   # Create Indicator Variables
-  mutate(Eval_Final = ifelse(Sub_Final != "Evaluating" | is.na(Sub_Final),0,1)) %>%
-  mutate(Ambig_Final = ifelse(Sub_Final != "Ambiguity" | is.na(Sub_Final),0,1)) %>%
-  mutate(Alt_Final = ifelse(Sub_Final != "Alternative" | is.na(Sub_Final),0,1)) %>%
-  mutate(Rel_Final = ifelse(Sub_Final != "Relaunch" | is.na(Sub_Final),0,1)) %>%
+  mutate(Eval_Final = ifelse(Sub_Final == "Evaluating" & !is.na(Sub_Final), 1, 0)) %>%
+  mutate(Ambig_Final = ifelse(Sub_Final == "Ambiguity" & !is.na(Sub_Final), 1, 0)) %>%
+  mutate(Alt_Final = ifelse(Sub_Final == "Alternative" & !is.na(Sub_Final) |
+                              `New_alt(eval)` & !is.na(`New_alt(eval)`) == 1, 1, 0)) %>%
+  mutate(Rel_Final = ifelse(Sub_Final != "Relaunch" | is.na(Sub_Final), 0, 1)) %>%
   # Word Counts
   mutate(EvalWords = ifelse(Eval_Final == 1, Words, 0)) %>%
   mutate(AmbigWords = ifelse(Ambig_Final == 1, Words, 0)) %>%
@@ -100,21 +101,27 @@ df_full <- rbind(df_ELA, df_MATH) %>%
 
 write_csv(df_full, "~/Dropbox/GitHub/McDonnell/McDonnell Coding/McDonnell_CLEAN.csv")
 
+df_full <- read_csv("~/McDonnell_CLEAN.csv")
 
 df_test <- df_full %>%
-  group_by(Pair, Cycle, PrePost) %>%
-  mutate(Sim_Med = median(Sim_Cum_Pair, na.rm = TRUE)) %>%
+  group_by(Content, HiLo, PairsCyclePrePost, Sim_Cum, Pair, PrePost) %>%
+  mutate(AltTally = cumsum(ifelse(Rel_Final == 0, 0, 1)), 
+         AltTally = ifelse(Rel_Final == 1, AltTally, NA), 
+         AltTally = max(AltTally, na.rm = T)) 
+  slice(1) %>%
+  mutate(AltTally = ifelse(AltTally == -Inf, NA, AltTally)) %>%
   ungroup() %>%
-  group_by_at(vars(Content, HiLo, Pair)) %>%
-  mutate(Sim_Mean_Med= mean(Sim_Med, na.rm = TRUE)) %>%
-  mutate(Sim_Mean_Med = ifelse(is.nan(Sim_Mean_Med), NA, Sim_Mean_Med))
+  group_by(Pair, PrePost) %>%
+  mutate(Alt_Med = median(AltTally, na.rm = T),
+         Alt_Med = ifelse(is.nan(Alt_Med), NA, Alt_Med))
 
 p1 <- df_test %>% 
-  subset(Content == "Math") %>%
-  ggplot(aes_string(x = "HiLo", y = "Sim_Mean_Med", fill = "Pair")) + 
-    ggtitle("Math") +
+  subset(Content == "ELA") %>%
+  ggplot(aes_string(x = "Pair", y = "Alt_Med", fill = "PrePost")) + 
+    ggtitle("ELA") +
     geom_bar(stat="identity", position = "dodge") + 
     scale_fill_brewer(palette = "Set1") +
-    geom_text(aes(label=round(Sim_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
-    coord_cartesian(ylim = c(0,10))
+    geom_text(aes(label=round(Alt_Med, digits = 2)), position = position_dodge(width = 1)) +
+    coord_cartesian(ylim = c(0,50))
   plot(p1)
+

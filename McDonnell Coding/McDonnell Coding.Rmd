@@ -177,7 +177,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
-      group_by_at(vars(input$col1, input$col2)) %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
       mutate(Pct_Sim = mean(Sim_Final*100))
   })
   
@@ -486,7 +486,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
-      group_by_at(vars(input$col1, input$col2)) %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
       mutate(Pct_Ambig = mean(Ambig_Final*100))
   })
   
@@ -675,7 +675,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
-      group_by_at(vars(input$col1, input$col2)) %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
       mutate(Pct_Alt = mean(Alt_Final*100))
   })
   
@@ -798,31 +798,36 @@ ui <- fluidPage(
 server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
-      group_by(Pair, Cycle, PrePost, Sim_Final) %>%
-      mutate(Alt_Med = median(AltCount, na.rm = TRUE)) %>%
+      group_by_at(vars(Content, HiLo, PairsCyclePrePost, Sim_Cum, `input$col1`, `input$col2`)) %>%
+      mutate(AltTally = cumsum(ifelse(Alt_Final == 0, 0, 1)), 
+             AltTally = ifelse(Alt_Final == 1, AltTally, NA), 
+             AltTally = max(AltTally)) %>%
+      slice(1) %>%
+      mutate(AltTally = ifelse(AltTally == -Inf, NA, AltTally)) %>%
       ungroup() %>%
-      group_by_at(vars(Content, input$col1, input$col2)) %>%
-      mutate(Alt_Mean_Med= mean(Alt_Med, na.rm = TRUE)) 
-  })
+      group_by_at(vars(`input$col1`, `input$col2`)) %>%
+      mutate(Alt_Med = median(AltTally, na.rm = T),
+             Alt_Med = ifelse(is.nan(Alt_Med), NA, Alt_Med))
+    })
   
   output$mainPlot1 <- renderPlot({
     p1 <- ggplot(data=subset(chartData(), Content == "ELA"), 
-           aes_string(x = input$col1, y = "Alt_Mean_Med", fill = input$col2)) + 
+           aes_string(x = input$col1, y = "Alt_Med", fill = input$col2)) + 
             ggtitle("ELA") +
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Alt_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      geom_text(aes(label=round(Alt_Med, digits = 2)), position = position_dodge(width = 1)) +
       coord_cartesian(ylim = c(0,10))
     plot(p1)
   })
   
   output$mainPlot2 <- renderPlot({
     p2 <- ggplot(data=subset(chartData(), Content == "Math"), 
-           aes_string(x = input$col1, y = "Alt_Mean_Med", fill = input$col2)) + 
+           aes_string(x = input$col1, y = "Alt_Med", fill = input$col2)) + 
             ggtitle("Math") +
       geom_bar(stat="identity", position = "dodge") + 
       scale_fill_brewer(palette = "Set1") +
-      geom_text(aes(label=round(Alt_Mean_Med, digits = 2)), position = position_dodge(width = 1)) +
+      geom_text(aes(label=round(Alt_Med, digits = 2)), position = position_dodge(width = 1)) +
       coord_cartesian(ylim = c(0,10))
     plot(p2)
   })
@@ -864,7 +869,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
-      group_by_at(vars(input$col1, input$col2)) %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
       mutate(Pct_Eval = mean(Eval_Final*100))
   })
   
@@ -1054,7 +1059,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   chartData <- reactive({
     df_full %>%
-      group_by_at(vars(input$col1, input$col2)) %>%
+      group_by_at(vars(Content, input$col1, input$col2)) %>%
       mutate(Pct_Rel = mean(Rel_Final*100))
   })
   
